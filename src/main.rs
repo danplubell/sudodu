@@ -24,9 +24,8 @@ fn example() -> Result<(), Box<dyn Error>> {
         let record = result?;
         record.as_slice();
         println!("{:?}", record);
-       
+
     }
     Ok(())
 }
 
- 
