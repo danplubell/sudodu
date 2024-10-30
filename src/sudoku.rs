@@ -1,5 +1,5 @@
 use crate::puzzle::Puzzle;
-
+use crate::solution::Solution;
 #[derive(Clone, PartialEq, Debug)]
 pub struct Sudoku {
     puzzle: Puzzle,
