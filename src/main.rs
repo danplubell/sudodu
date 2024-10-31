@@ -1,7 +1,8 @@
 mod sudoku;
 mod solution;
 mod model;
-use crate::model::puzzle::Puzzle;
+
+use model::puzzle;
 //use csv::Reader;
 //use std::error::Error;
 //use sudoku::Sudoku;
@@ -10,7 +11,7 @@ fn main() {
     let _solution = "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
     let _puzzle_data = "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
     //let s = Sudoku::new(solution, puzzle);
-    let p = Puzzle::try_from(_solution);
+    let p = puzzle::Puzzle::try_from(_solution);
 }
 /*
 fn example() -> Result<(), Box<dyn Error>> {
