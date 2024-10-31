@@ -2,8 +2,13 @@
 pub struct Puzzle{
     data: Vec<u8>,
     regions: Vec<Region>,
-    rows: Vec<Rows>,
-    cols: Vec<Cols>,
+    rows: Vec<Row>,
+    cols: Vec<Col>,
+}
+impl Puzzle {
+    fn new(value: &str)-> Result<Self, ParsePuzzleError> {
+        Puzzle::try_from(value)
+    }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {
@@ -30,6 +35,10 @@ impl TryFrom<&str> for Puzzle {
             .chars()
             .map(|c| c.to_digit(10).unwrap() as u8)
             .collect();
+        //regions
+        //rows
+        //cols
+        
         Ok(Puzzle { data: n})
     }
 }
