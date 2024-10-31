@@ -1,9 +1,13 @@
+use crate::model::cols::Cols;
+use crate::model::regions::Regions;
+use crate::model::rows::Rows;
+
 #[derive(Clone, PartialEq, Debug)]
 pub struct Puzzle{
     data: Vec<u8>,
-    regions: Vec<Region>,
-    rows: Vec<Row>,
-    cols: Vec<Col>,
+    regions: Regions,
+    rows: Rows,
+    cols: Cols,
 }
 impl Puzzle {
     fn new(value: &str)-> Result<Self, ParsePuzzleError> {
