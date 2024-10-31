@@ -1,6 +1,10 @@
 #[derive(Clone, PartialEq, Debug)]
-pub struct Puzzle(Vec<u8>);
-
+pub struct Puzzle{
+    data: Vec<u8>,
+    regions: Vec<Region>,
+    rows: Vec<Rows>,
+    cols: Vec<Cols>,
+}
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {
     #[error("Value string is too long")]
@@ -13,20 +17,20 @@ pub enum ParsePuzzleError {
 impl TryFrom<&str> for Puzzle {
     type Error = ParsePuzzleError;
     fn try_from(value: &str) -> Result<Self, Self::Error> {
+        if value.chars().any(|c| !c.is_numeric()) {
+            return Err(ParsePuzzleError::HasAlpha);
+        }
         if value.len() > 81 {
             return Err(ParsePuzzleError::TooLong)
         }
         if value.len() < 81 {
             return Err(ParsePuzzleError::TooShort);
         }
-        if value.chars().any(|c| !c.is_numeric()) {
-            return Err(ParsePuzzleError::HasAlpha);
-        }
         let n = value
             .chars()
             .map(|c| c.to_digit(10).unwrap() as u8)
             .collect();
-        Ok(Puzzle(n))
+        Ok(Puzzle { data: n})
     }
 }
 
@@ -38,16 +42,15 @@ mod tests {
     #[test]
     fn too_short(){
         let err = Puzzle::try_from("1234").unwrap_err();
+        println!("{}", err);
         assert_eq!(err, ParsePuzzleError::TooShort);
-
-    }
-    /*
-    #[test]
-    fn not_all_digits() {
-        let puzzle = Puzzle::try_from("12abc").unwrap();
-        println!("{:?}",puzzle.0);
-        assert_eq!(puzzle.0, vec!());
+        
     }
     
-     */
+    #[test]
+    fn not_all_digits() {
+        let err = Puzzle::try_from("aaaaaaaaaaaaaaa").unwrap_err();
+       
+        assert_eq!(err, ParsePuzzleError::HasAlpha);
+    }
 }
