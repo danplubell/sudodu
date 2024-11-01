@@ -1,16 +1,20 @@
+use crate::model::cell::Cell;
+use crate::model::cells::Cells;
+use crate::model::collect_cols::collect_cols;
+use crate::model::collect_rows::collect_rows;
 use crate::model::cols::Cols;
 use crate::model::regions::Regions;
 use crate::model::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
-pub struct Puzzle{
-    data: Vec<u8>,
+pub struct Puzzle {
+    data: Cells,
     regions: Regions,
     rows: Rows,
     cols: Cols,
 }
 impl Puzzle {
-    fn new(value: &str)-> Result<Self, ParsePuzzleError> {
+    fn new(value: &str) -> Result<Self, ParsePuzzleError> {
         Puzzle::try_from(value)
     }
 }
@@ -30,22 +34,28 @@ impl TryFrom<&str> for Puzzle {
             return Err(ParsePuzzleError::HasAlpha);
         }
         if value.len() > 81 {
-            return Err(ParsePuzzleError::TooLong)
+            return Err(ParsePuzzleError::TooLong);
         }
         if value.len() < 81 {
             return Err(ParsePuzzleError::TooShort);
         }
-        let n = value
+        let data = value
             .chars()
-            .map(|c| c.to_digit(10).unwrap() as u8)
+            .map(|c| Cell {
+                value: c.to_digit(10).unwrap() as u8,
+            })
             .collect();
         //regions
         //rows
         //cols
-        
-        Ok(Puzzle { data: n})
+        let rows:Rows = collect_rows(&data);
+        let cols:Cols = collect_cols(&data);
+        let regions:Regions = collect_regions(&data);
+        Ok(Puzzle { data, regions, rows, cols })
     }
 }
+
+
 
 #[cfg(test)]
 mod tests {
@@ -53,17 +63,16 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
-    fn too_short(){
+    fn too_short() {
         let err = Puzzle::try_from("1234").unwrap_err();
         println!("{}", err);
         assert_eq!(err, ParsePuzzleError::TooShort);
-        
     }
-    
+
     #[test]
     fn not_all_digits() {
         let err = Puzzle::try_from("aaaaaaaaaaaaaaa").unwrap_err();
-       
+
         assert_eq!(err, ParsePuzzleError::HasAlpha);
     }
 }
