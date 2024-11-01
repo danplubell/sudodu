@@ -1,8 +1,8 @@
 use crate::model::cell::Cell;
 
-#[derive(Clone, PartialEq, Debug)]
-pub struct Cells {
-    values: Vec<Cell>,
+#[derive(PartialEq, Debug)]
+pub struct Cells<'a> {
+    values: [&'a Cell],
 }
 
 /*
@@ -18,6 +18,8 @@ impl IntoIterator for Cells {
 
 
  */
+impl Sized for Cells<'a> {}
+
 impl FromIterator<Cell> for Cells {
     fn from_iter<T: IntoIterator<Item = Cell>>(iter: T) -> Self {
         let mut values = Vec::new();
