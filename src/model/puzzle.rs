@@ -1,6 +1,7 @@
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
 use crate::model::collect_cols::collect_cols;
+use crate::model::collect_regions::collect_regions;
 use crate::model::collect_rows::collect_rows;
 use crate::model::cols::Cols;
 use crate::model::regions::Regions;
@@ -41,9 +42,7 @@ impl TryFrom<&str> for Puzzle {
         }
         let data = value
             .chars()
-            .map(|c| Cell {
-                value: c.to_digit(10).unwrap() as u8,
-            })
+            .map(|c| Cell::new(c.to_digit(10).unwrap() as u8))
             .collect();
         //regions
         //rows
