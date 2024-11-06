@@ -8,9 +8,9 @@ impl Cell {
             value
         }
     }
-    pub fn get_value(&self) -> u8 {
+    pub fn value(&self)-> u8 {
         self.value
-    } 
+    }
 }
 
 #[cfg(test)]
@@ -18,8 +18,8 @@ mod tests {
     use crate::model::cell::Cell;
 
     #[test]
-    fn test_new(){
-        let c = Cell::new(1u8);
-        assert_eq!(c.get_value(),1 );
+    fn new_get_cell() {
+        let cell = Cell::new(5);
+        assert_eq!(cell.value(), 5);
     }
 }

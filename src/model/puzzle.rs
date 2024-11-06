@@ -40,17 +40,14 @@ impl TryFrom<&str> for Puzzle {
         if value.len() < 81 {
             return Err(ParsePuzzleError::TooShort);
         }
-        let data = value
-            .chars()
-            .map(|c| Cell::new(c.to_digit(10).unwrap() as u8))
-            .collect();
+        let cells = Cells::from(value);
         //regions
         //rows
         //cols
-        let rows:Rows = collect_rows(&data);
-        let cols:Cols = collect_cols(&data);
-        let regions:Regions = collect_regions(&data);
-        Ok(Puzzle { data, regions, rows, cols })
+        let rows:Rows = collect_rows(&cells);
+        let cols:Cols = collect_cols(&cells);
+        let regions:Regions = collect_regions(&cells);
+        Ok(Puzzle { data: cells, regions, rows, cols })
     }
 }
 

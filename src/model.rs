@@ -10,3 +10,4 @@ mod cells;
 mod collect_rows;
 mod collect_cols;
 mod collect_regions;
+mod test;
