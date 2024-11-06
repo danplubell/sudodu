@@ -6,6 +6,12 @@ pub struct Col {
 }
 
 impl Col {
+    pub(crate) fn get_row(&mut self, row: usize) -> Option<&mut Cell> { 
+        self.values().get_mut(row)
+    }
+}
+
+impl Col {
     pub(crate) fn values(&mut self) -> &mut Vec<Cell> {
         &mut self.values
     }

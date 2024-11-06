@@ -22,7 +22,26 @@ impl Cols {
             }
         }
     }
-    
+    pub fn value_at_row_col(&mut self, row:usize, col:usize) -> Option<Cell> {
+       
+        let col= self.get_col(col);
+        match col {
+            Some( c) => {
+                let r = c.get_row(row);
+                match r {
+                    Some(r)=> Some(Cell::new(r.value)),
+                    None=> None
+                }
+            },
+            None=> None
+            
+        }
+    }
+
+    fn get_col(&mut self, idx: usize) -> Option<&mut Col> { 
+        self.values.get_mut(idx)
+
+    }
 }
 
 impl Cols {
