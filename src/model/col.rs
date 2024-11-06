@@ -14,7 +14,7 @@ impl Col {
 impl Col {
     pub fn new() -> Self {
         Col {
-            values:  vec![Cell::new(0); 9],
+            values:  Vec::new(),
         }
     }
 }
