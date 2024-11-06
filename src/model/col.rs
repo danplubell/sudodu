@@ -6,15 +6,26 @@ pub struct Col {
 }
 
 impl Col {
-    pub(crate) fn values(self) -> Vec<Cell> {
-        self.values
+    pub(crate) fn values(&mut self) -> &mut Vec<Cell> {
+        &mut self.values
     }
 }
 
 impl Col {
-    pub fn new(cells: Vec<Cell>) -> Self {
+    pub fn new() -> Self {
         Col {
-            values: cells,
+            values:  vec![Cell::new(0); 9],
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::model::col::Col;
+
+    #[test]
+    fn test_new() {
+        let mut col = Col::new();
+        assert_eq!(col.values().len(), 9)
     }
 }

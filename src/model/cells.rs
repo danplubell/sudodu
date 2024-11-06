@@ -10,8 +10,8 @@ impl Cells {
     pub fn new(cells: Vec<Cell>) -> Self {
         Cells { values: cells }
     }
-    pub fn values(self) -> Vec<Cell> {
-        self.values
+    pub fn values(&self) -> &Vec<Cell> {
+        &self.values
     }
 }
 impl From<&str> for Cells {
@@ -56,7 +56,7 @@ mod tests {
             Cells::new(vec!(Cell::new(1), Cell::new(2), Cell::new(3), Cell::new(4)))
         );
         assert_eq!(
-            cells.values(),
+            *cells.values(),
             vec!(Cell::new(1), Cell::new(2), Cell::new(3), Cell::new(4))
         );
     }
