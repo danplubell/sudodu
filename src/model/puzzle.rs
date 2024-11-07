@@ -9,7 +9,7 @@ use crate::model::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Puzzle {
-    data: Cells,
+    cells: Cells,
     regions: Regions,
     rows: Rows,
     cols: Cols,
@@ -47,7 +47,7 @@ impl TryFrom<&str> for Puzzle {
         let rows:Rows = collect_rows(&cells);
         let cols:Cols = collect_cols(&cells);
         let regions:Regions = collect_regions(&cells);
-        Ok(Puzzle { data: cells, regions, rows, cols })
+        Ok(Puzzle { cells, regions, rows, cols })
     }
 }
 

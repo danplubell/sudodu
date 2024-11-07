@@ -1,10 +1,25 @@
 use crate::model::cells::Cells;
+use crate::model::region::Region;
 use crate::model::regions::Regions;
 
 pub fn collect_regions(cells: &Cells) -> Regions {
-    let region = [[0, 9, 18], [3, 12, 21]];
-    for (i, c) in cells.values().iter().enumerate() {}
-    Regions::new()
+    let roots:[usize;9] = [0, 3, 6, 27, 30, 33, 57, 60, 63];
+    let mut regions = Regions::new();
+    for (i, r) in roots.iter().enumerate() {
+        let end = r + 3;
+        let start = *r;
+        let mut region = Region::new();
+        for z in start..end {
+            let row = r + z * 9;
+            for j in 0..3 {
+                let idx:usize = r + j;
+                println!("{:?}",cells.values()[idx]);
+                region.add_cell(&cells.values()[idx])
+            }
+        }
+        regions.add_region(region);
+    }
+    regions
 }
 
 #[cfg(test)]
@@ -47,6 +62,7 @@ mod tests {
             [60, 69, 78],
             [63, 72, 81],
         ];
+        /*
         let roots:[usize;9] = [0, 3, 6, 27, 30, 33, 57, 60, 63];
         let mut regions = Regions::new();
         for (i, r) in roots.iter().enumerate() {
@@ -63,6 +79,8 @@ mod tests {
             }
             regions.add_region(region);
         }
+        
+         */
         /*
         for r in region {
             for r1 in r {
