@@ -20,10 +20,8 @@ mod tests {
     fn test_id() {
         // create vector of buckets
         // go through list and put cells in buckets
-        let solution =
-            "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
         let s9 = "123456789";
-        let ss9 = vec![s9; 9];
+        let ss9 = [s9; 9];
         let sol9 = ss9.join("");
 
         let cells = Cells::from(sol9.as_str());

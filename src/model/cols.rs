@@ -7,10 +7,10 @@ pub struct Cols {
 }
 
 impl Cols {
+    
     pub(crate) fn add_to_column(&mut self, index: usize, cell: &Cell) {
         let col = &mut self.values.get_mut(index);
         let cell = Cell::new(cell.value);
-
         match col {
             Some(c) => {
                 c.values().push(cell);
@@ -23,7 +23,6 @@ impl Cols {
         }
     }
     pub fn value_at_row_col(&mut self, row:usize, col:usize) -> Option<Cell> {
-       
         let col= self.get_col(col);
         match col {
             Some( c) => {
@@ -34,11 +33,11 @@ impl Cols {
                 }
             },
             None=> None
-            
+
         }
     }
 
-    fn get_col(&mut self, idx: usize) -> Option<&mut Col> { 
+    fn get_col(&mut self, idx: usize) -> Option<&mut Col> {
         self.values.get_mut(idx)
 
     }
