@@ -24,7 +24,8 @@ impl Cols {
     }
     pub fn value_at_row_col(&mut self, row:usize, col:usize) -> Option<Cell> {
         let col= self.get_col(col);
-        match col {
+        col.and_then(|c| c.get_row(row).map(|r| Cell::new(r.value)))
+/*        match col {
             Some( c) => {
                 let r = c.get_row(row);
                 match r {
@@ -33,8 +34,9 @@ impl Cols {
                 }
             },
             None=> None
-
         }
+        
+ */
     }
 
     fn get_col(&mut self, idx: usize) -> Option<&mut Col> {
@@ -62,5 +64,15 @@ mod tests {
         let mut cols = Cols::new();
         cols.add_to_column(0, &Cell::new(5));
         assert_eq!(cols.values()[0].values()[0].value, 5);
+    }
+    #[test]
+    fn test_value_at_row_col() {
+        let mut cols = Cols::new();
+        cols.add_to_column(0, &Cell::new(5));
+        let r = cols.value_at_row_col(0,0);
+        assert_eq!(r.unwrap().value,5);
+        cols.add_to_column(1, &Cell::new(6));
+        let r = cols.value_at_row_col(0,1);
+        assert_eq!(r.unwrap().value,6);
     }
 }

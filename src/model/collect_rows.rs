@@ -30,3 +30,4 @@ mod tests {
         println!("{:?}", v.index(0));
     }
 }
+
