@@ -9,9 +9,6 @@ impl Rows {
     pub(crate) fn add_row(&mut self, row: Row) {
         self.values.push(row);
     }
-    pub fn values(self) -> Vec<Row> {
-        self.values
-    }
 }
 
 impl Rows {

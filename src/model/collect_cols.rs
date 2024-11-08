@@ -5,7 +5,7 @@ pub fn collect_cols(cells: &Cells) -> Cols {
     let mut cols = Cols::new();
     for (i, cell) in cells.iter().enumerate() {
         let bucket = i % 9;
-        cols.add_to_column(bucket, &cell);
+        cols.add_to_column(bucket, cell);
     }
     cols
 }

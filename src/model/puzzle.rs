@@ -40,9 +40,6 @@ impl TryFrom<&str> for Puzzle {
             return Err(ParsePuzzleError::TooShort);
         }
         let cells = Cells::from(value);
-        //regions
-        //rows
-        //cols
         let rows:Rows = collect_rows(&cells);
         let cols:Cols = collect_cols(&cells);
         let regions:Regions = collect_regions(&cells);

@@ -8,9 +8,6 @@ impl Cell {
             value
         }
     }
-    pub fn value(&self)-> u8 {
-        self.value
-    }
 }
 
 #[cfg(test)]
