@@ -1,0 +1,19 @@
+318 457 962
+572 986 143
+946 312 578
+639 178 425
+157 294 836
+284 563 791
+425 731 689
+761 829 354
+893 645 217";
+Regions { values:
+Region { values:
+Cell { value: 3 }, Cell { value: 1 }, Cell { value: 8 },
+Cell { value: 5 }, Cell { value: 7 }, Cell { value: 2 },
+Cell { value: 9 }, Cell { value: 4 }, Cell { value: 6 }] },
+Region { values: [Cell { value: 4 }, Cell { value: 5 }, Cell { value: 7 }, Cell { value: 9 }, Cell { value: 8 }, Cell { value: 6 }, Cell { value: 3 }, Cell { value: 1 }, Cell { value: 2 }] }, Region { values: [Cell { value: 9 }, Cell { value: 6 }, Cell { value: 2 }, Cell { value: 1 }, Cell { value: 4 }, Cell { value: 3 }, Cell { value: 5 }, Cell { value: 7 }, Cell { value: 8 }] }, Region { values: [Cell { value: 6 }, Cell { value: 3 }, Cell { value: 9 }, Cell { value: 1 }, Cell { value: 5 }, Cell { value: 7 }, Cell { value: 2 }, Cell { value: 8 }, Cell { value: 4 }] }, Region { values: [Cell { value: 1 }, Cell { value: 7 }, Cell { value: 8 }, Cell { value: 2 }, Cell { value: 9 }, Cell { value: 4 }, Cell { value: 5 }, Cell { value: 6 }, Cell { value: 3 }] }, Region { values: [Cell { value: 4 }, Cell { value: 2 }, Cell { value: 5 }, Cell { value: 8 }, Cell { value: 3 }, Cell { value: 6 }, Cell { value: 7 }, Cell { value: 9 }, Cell { value: 1 }] }, Region { values: [Cell { value: 7 }, Cell { value: 3 }, Cell { value: 1 }, Cell { value: 8 }, Cell { value: 2 }, Cell { value: 9 }, Cell { value: 6 }, Cell { value: 4 }, Cell { value: 5 }] },
+Region { values: [
+Cell { value: 6 }, Cell { value: 8 }, Cell { value: 9 },
+Cell { value: 3 }, Cell { value: 5 }, Cell { value: 4 },
+Cell { value: 2 }, Cell { value: 1 }, Cell { value: 7 }] }] }

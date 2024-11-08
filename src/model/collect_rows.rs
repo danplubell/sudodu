@@ -3,8 +3,8 @@ use crate::model::row::Row;
 use crate::model::rows::Rows;
 
 pub fn collect_rows(cells: &Cells) -> Rows {
-    let v = cells.values();
-    let c = v.chunks(9);
+    
+    let c = cells.get_chunks(9);
     let mut r = Rows::new();
     for chunk in c {
          r.add_row(Row::new(chunk.to_vec()));

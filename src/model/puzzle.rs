@@ -1,4 +1,3 @@
-use crate::model::cell::Cell;
 use crate::model::cells::Cells;
 use crate::model::collect_cols::collect_cols;
 use crate::model::collect_regions::collect_regions;

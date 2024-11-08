@@ -1,3 +1,4 @@
+use std::slice::Chunks;
 use crate::model::cell::Cell;
 use std::vec::IntoIter;
 
@@ -10,8 +11,14 @@ impl Cells {
     pub fn new(cells: Vec<Cell>) -> Self {
         Cells { values: cells }
     }
-    pub fn values(&self) -> &Vec<Cell> {
-        &self.values
+   pub fn iter(&self) -> impl Iterator<Item = &Cell> {
+        self.values.iter()
+    }
+    pub fn get_at(&self, index: usize) -> Option<&Cell> {
+        self.values.get(index)
+    }
+    pub fn get_chunks(&self, size: usize) -> Chunks<Cell> {
+        self.values.chunks(size)
     }
 }
 impl From<&str> for Cells {
@@ -41,6 +48,7 @@ impl IntoIterator for Cells {
         self.values.into_iter() // We use the iterator from the Vec
     }
 }
+
 #[cfg(test)]
 mod tests {
     use crate::model::cell::Cell;
@@ -54,10 +62,6 @@ mod tests {
         assert_eq!(
             cells,
             Cells::new(vec!(Cell::new(1), Cell::new(2), Cell::new(3), Cell::new(4)))
-        );
-        assert_eq!(
-            *cells.values(),
-            vec!(Cell::new(1), Cell::new(2), Cell::new(3), Cell::new(4))
         );
     }
 }

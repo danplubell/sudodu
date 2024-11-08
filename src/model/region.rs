@@ -8,9 +8,9 @@ impl Region {
     pub fn add_cell(&mut self, cell: &Cell) {
         self.values.push(Cell::new(cell.value));
     }
-    pub fn new() -> Self {
+    pub fn new(cells: Vec<Cell>) -> Self {
         Self {
-            values: Vec::new()
+            values: cells
         }
     }
 }
