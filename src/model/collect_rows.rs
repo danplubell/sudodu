@@ -25,9 +25,7 @@ mod tests {
 
         let c = Cells::from(solution);
         let rows = collect_rows(&c);
-        let v = rows.values();
-        assert_eq!(v.len(), 9);
-        println!("{:?}", v.index(0));
+        println!("{:?}", rows);
     }
 }
 

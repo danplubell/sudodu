@@ -17,6 +17,9 @@ impl Puzzle {
     fn new(value: &str) -> Result<Self, ParsePuzzleError> {
         Puzzle::try_from(value)
     }
+    fn validate_puzzle(&self) -> bool {
+        true
+    }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {

@@ -17,6 +17,6 @@ mod tests {
     #[test]
     fn new_get_cell() {
         let cell = Cell::new(5);
-        assert_eq!(cell.value(), 5);
+        assert_eq!(cell.value, 5);
     }
 }

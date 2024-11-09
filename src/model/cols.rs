@@ -31,6 +31,9 @@ impl Cols {
         self.values.get_mut(idx)
 
     }
+    pub fn validate(&self) -> bool {
+        true
+    }
 }
 
 impl Cols {
