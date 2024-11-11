@@ -26,6 +26,11 @@ mod tests {
         let c = Cells::from(solution);
         let rows = collect_rows(&c);
         println!("{:?}", rows);
+
+        let puzzle_data = "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
+        let c = Cells::from(puzzle_data);
+        let rows = collect_rows(&c);
+        println!("{:?}", rows);
     }
 }
 

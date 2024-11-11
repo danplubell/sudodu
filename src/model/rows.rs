@@ -1,3 +1,4 @@
+use crate::model::cell::Cell;
 use crate::model::row::Row;
 
 #[derive(Clone, PartialEq, Debug)]
@@ -8,6 +9,9 @@ pub struct Rows {
 impl Rows {
     pub(crate) fn add_row(&mut self, row: Row) {
         self.values.push(row);
+    }
+    pub fn iter(&self ) ->impl Iterator<Item = &Row>{
+        self.values.iter()
     }
 }
 

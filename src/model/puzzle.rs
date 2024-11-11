@@ -18,7 +18,10 @@ impl Puzzle {
         Puzzle::try_from(value)
     }
     fn validate_puzzle(&self) -> bool {
-        true
+        //rows
+        let rows_valid = self.rows.iter().all(|row| row.is_valid());
+        //cols
+        //regions
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]

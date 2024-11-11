@@ -1,14 +1,19 @@
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
+use crate::model::validate_cells::validate_cells;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Row {
-    value: Cells
+    values: Cells
 }
 impl Row {
     pub fn new(vec: Vec<Cell>) -> Self {
         Self {
-            value: Cells::new(vec),
+            values: Cells::new(vec),
         }
+    }
+    pub fn is_valid(&self) -> bool {
+        let r = validate_cells(self.values);
+        true
     }
 }

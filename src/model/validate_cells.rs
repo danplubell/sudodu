@@ -15,13 +15,41 @@ enum ErrorReason {
 }
 
 #[derive(Clone, PartialEq, Debug)]
-pub struct CheckMultipleResults {
+pub struct ValidateCellsResults {
     not_found: Vec<u8>,
     multiple: Vec<u8>,
 }
-pub fn validate_cells(cells: &[Cell]) -> Result<bool, CheckMultipleResults> {
+
+pub fn validate_cells(cells: &[Cell]) -> Result<bool, ValidateCellsResults> {
+    let mut cell_reg = [0u8; 10];
     let mut not_found: Vec<u8> = Vec::new();
     let mut multiple: Vec<u8> = Vec::new();
+
+    cells.iter().for_each(|c| {
+        let r = cell_reg.get_mut(c.value as usize);
+        if let Some(v) = r {
+            *v += 1
+        }
+    });
+    cell_reg.iter().skip(1).enumerate().for_each(|(i,c)|{
+        match *c {
+            0 => not_found.push(i as u8),
+            2.. => multiple.push(i as u8),
+            _=>{}
+        }
+    });
+    match (not_found.is_empty(), not_found.is_empty()) {
+        (true, true) => Ok(true),
+        _ => Err(ValidateCellsResults {
+            not_found,
+            multiple,
+        }),
+    }
+}
+pub fn v_cells(cells: &[Cell]) -> Result<bool, ValidateCellsResults> {
+    let mut not_found: Vec<u8> = Vec::new();
+    let mut multiple: Vec<u8> = Vec::new();
+
     for i in 1..=9 {
         let mut count = 0;
 
@@ -38,7 +66,7 @@ pub fn validate_cells(cells: &[Cell]) -> Result<bool, CheckMultipleResults> {
     }
     match (not_found.is_empty(), not_found.is_empty()) {
         (true, true) => Ok(true),
-        _ => Err(CheckMultipleResults {
+        _ => Err(ValidateCellsResults {
             not_found,
             multiple,
         }),
