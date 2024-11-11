@@ -13,7 +13,10 @@ impl Row {
         }
     }
     pub fn is_valid(&self) -> bool {
-        let r = validate_cells(self.values);
-        true
+        let r = validate_cells(&self.values);
+        match r {
+            Ok(_) => true,
+            _  => false
+        }
     }
 }

@@ -43,6 +43,9 @@ impl Cols {
     pub fn values(&mut self) -> &mut Vec<Col> {
         &mut self.values
     }
+    pub fn iter(&self ) ->impl Iterator<Item = &Col>{
+        self.values.iter()
+    }
 }
 
 #[cfg(test)]

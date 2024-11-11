@@ -21,7 +21,9 @@ impl Puzzle {
         //rows
         let rows_valid = self.rows.iter().all(|row| row.is_valid());
         //cols
+        let cols_valid = self.cols.iter().all(|col| col.is_valid());
         //regions
+        true
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]

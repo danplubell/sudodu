@@ -1,4 +1,5 @@
 use crate::model::cell::Cell;
+use crate::model::cells::Cells;
 
 #[derive(Debug, thiserror::Error)]
 #[error("`{invalid_number}` is not a valid number")]
@@ -20,7 +21,7 @@ pub struct ValidateCellsResults {
     multiple: Vec<u8>,
 }
 
-pub fn validate_cells(cells: &[Cell]) -> Result<bool, ValidateCellsResults> {
+pub fn validate_cells(cells: &Cells) -> Result<bool, ValidateCellsResults> {
     let mut cell_reg = [0u8; 10];
     let mut not_found: Vec<u8> = Vec::new();
     let mut multiple: Vec<u8> = Vec::new();
@@ -76,6 +77,7 @@ pub fn v_cells(cells: &[Cell]) -> Result<bool, ValidateCellsResults> {
 #[cfg(test)]
 mod tests {
     use crate::model::cell::Cell;
+    use crate::model::cells::Cells;
     use crate::model::validate_cells::validate_cells;
 
     #[test]
@@ -91,7 +93,8 @@ mod tests {
             Cell::new(8),
             Cell::new(9),
         ];
-        let r = validate_cells(&ok_cells);
+        let cells = Cells::new(ok_cells);
+        let r = validate_cells(&cells);
         println!("{:?}", r);
     }
     #[test]
@@ -107,7 +110,8 @@ mod tests {
             Cell::new(8),
             Cell::new(9),
         ];
-        let r = validate_cells(&not_ok_cells);
+        let cells = Cells::new(not_ok_cells);
+        let r = validate_cells(&cells);
         println!("{:?}", r);
     }
 }
