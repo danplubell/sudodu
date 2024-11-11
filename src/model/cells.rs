@@ -8,8 +8,8 @@ pub struct Cells {
 }
 
 impl Cells {
-    pub fn new(cells: Vec<Cell>) -> Self {
-        Cells { values: cells }
+    pub fn new() -> Self {
+        Cells { values: Vec::new() }
     }
    pub fn iter(&self) -> impl Iterator<Item = &Cell> {
         self.values.iter()
