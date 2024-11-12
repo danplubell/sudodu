@@ -8,6 +8,9 @@ pub struct Cols<'a> {
 
 impl<'a> Cols<'a> {
     
+    // add a cell to a column
+    // create the column if it doesn't exist
+    // add the cell to the column
     pub(crate) fn add_to_column(&mut self, index: usize, cell: Cell) {
         let col = &mut self.values.get_mut(index);
         let cell = Cell::new(cell.value());
