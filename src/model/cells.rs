@@ -1,5 +1,5 @@
-use std::slice::Chunks;
 use crate::model::cell::Cell;
+use std::slice::Chunks;
 use std::vec::IntoIter;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -8,10 +8,10 @@ pub struct Cells {
 }
 
 impl Cells {
-    pub fn new(cells: Vec<Cell>) -> Self {
-        Cells { values: cells }
+    pub fn new() -> Self {
+        Cells { values: Vec::new() }
     }
-   pub fn iter(&self) -> impl Iterator<Item = &Cell> {
+    pub fn iter(&self) -> impl Iterator<Item = &Cell> {
         self.values.iter()
     }
     pub fn get_at(&self, index: usize) -> Option<&Cell> {
@@ -19,6 +19,9 @@ impl Cells {
     }
     pub fn get_chunks(&self, size: usize) -> Chunks<Cell> {
         self.values.chunks(size)
+    }
+    pub fn add_cell(&mut self,cell: Cell) {
+        self.values.push(cell)
     }
 }
 impl From<&str> for Cells {
@@ -59,9 +62,14 @@ mod tests {
             "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
         let numbers = "1234";
         let cells = Cells::from(numbers);
+        let mut expected = Cells::new();
+        expected.add_cell(Cell::new(1));
+        expected.add_cell(Cell::new(2));
+        expected.add_cell(Cell::new(3));
+        expected.add_cell(Cell::new(4));
         assert_eq!(
             cells,
-            Cells::new(vec!(Cell::new(1), Cell::new(2), Cell::new(3), Cell::new(4)))
+            expected
         );
     }
 }
