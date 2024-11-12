@@ -21,7 +21,6 @@ impl Col {
         self.values().get_mut(row)
     }
     pub fn is_valid(&self) -> bool {
-        let cells = Cells::new(&self.values);
         let r = validate_cells(&self.values);
         match r {
             Ok(_) => true,
