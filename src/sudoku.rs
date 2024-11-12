@@ -1,9 +1,9 @@
-use crate::puzzle::Puzzle;
-use crate::solution::Solution;
+//use crate::puzzle_save::Puzzle;
+//use crate::solution::Solution;
 #[derive(Clone, PartialEq, Debug)]
 pub struct Sudoku {
-    puzzle: Puzzle,
-    solution: Solution,
+//    puzzle: Puzzle,
+//    solution: Solution,
 }
 impl Sudoku {
 //    fn new(puzzle: &str, solution: &str) -> Self {

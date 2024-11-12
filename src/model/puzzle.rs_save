@@ -59,7 +59,7 @@ impl TryFrom<&str> for Puzzle {
 
 #[cfg(test)]
 mod tests {
-    use crate::puzzle::{ParsePuzzleError, Puzzle};
+    use crate::puzzle_save::{ParsePuzzleError, Puzzle};
     use std::convert::TryFrom;
 
     #[test]

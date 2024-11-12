@@ -1,6 +1,6 @@
 use crate::model::cell::Cell;
 
-#[derive(PartialEq, Debug)]
+#[derive(Clone, PartialEq, Debug, Copy)]
 pub struct Col {
     values: [Cell; 9],
 }
@@ -16,8 +16,8 @@ impl Col {
         &self.values
     }
     // gets the value for a row in a column
-    pub(crate) fn get_row(&self, row: usize) -> Option<&Cell> {
-        self.values().get(row)
+    pub(crate) fn get_row(&self, row: usize) -> Cell {
+       self.values[row]
     }
     /*
     pub fn is_valid(&self) -> bool {
