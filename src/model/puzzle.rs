@@ -1,12 +1,14 @@
 use crate::model::cells::Cells;
 use crate::model::collect_cols::collect_cols;
+use crate::model::collect_rows::collect_rows;
 use crate::model::cols::Cols;
+use crate::model::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Puzzle {
     cells: Cells,
 //    regions: Regions,
-//    rows: Rows,
+    rows: Rows,
     cols: Cols,
 }
 impl Puzzle {
@@ -46,10 +48,10 @@ impl TryFrom<&str> for Puzzle {
             return Err(ParsePuzzleError::TooShort);
         }
         let cells = Cells::from(value);
-//        let rows:Rows = collect_rows(&cells);
+        let rows:Rows = collect_rows(&cells);
         let cols:Cols = collect_cols(&cells);
 //        let regions:Regions = collect_regions(&cells);
-        Ok(Puzzle { cells, cols })
+        Ok(Puzzle { cells, cols, rows })
     }
 }
 
