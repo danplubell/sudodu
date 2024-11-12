@@ -1,10 +1,13 @@
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Cell {
-    pub(crate) value: u8,
+     value: u8,
 }
 impl Cell {
     pub fn new(value: u8) -> Self {
         Self { value }
+    }
+    pub fn value(&self) -> u8 {
+        self.value
     }
 }
 
