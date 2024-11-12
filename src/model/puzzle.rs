@@ -71,7 +71,6 @@ mod tests {
     #[test]
     fn not_all_digits() {
         let err = Puzzle::try_from("aaaaaaaaaaaaaaa").unwrap_err();
-
         assert_eq!(err, ParsePuzzleError::HasAlpha);
     }
 }
