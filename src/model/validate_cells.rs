@@ -1,5 +1,4 @@
 use crate::model::cell::Cell;
-use crate::model::cells::Cells;
 
 #[derive(Debug, thiserror::Error)]
 #[error("`{invalid_number}` is not a valid number")]
@@ -21,13 +20,15 @@ pub struct ValidateCellsResults {
     multiple: Vec<u8>,
 }
 
-pub fn validate_cells(cells: &Cells) -> Result<bool, ValidateCellsResults> {
+pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
     let mut cell_reg = [0u8; 10];
     let mut not_found: Vec<u8> = Vec::new();
     let mut multiple: Vec<u8> = Vec::new();
-
+    for (i,cell) in cells.iter().enumerate() {
+        
+    }
     cells.iter().for_each(|c| {
-        let r = cell_reg.get_mut(c.value as usize);
+        let r = cell_reg.get_mut(c.value() as usize);
         if let Some(v) = r {
             *v += 1
         }
@@ -55,7 +56,7 @@ pub fn v_cells(cells: &[Cell]) -> Result<bool, ValidateCellsResults> {
         let mut count = 0;
 
         cells.iter().for_each(|z| {
-            if z.value == i {
+            if z.value() == i {
                 count += 1;
             }
         });
@@ -82,7 +83,7 @@ mod tests {
 
     #[test]
     fn test_multiple_cells() {
-        let ok_cells = vec![
+        let ok_cells = [
             Cell::new(1),
             Cell::new(2),
             Cell::new(3),
@@ -93,13 +94,12 @@ mod tests {
             Cell::new(8),
             Cell::new(9),
         ];
-        let cells = Cells::new(ok_cells);
-        let r = validate_cells(&cells);
+        let r = validate_cells(ok_cells);
         println!("{:?}", r);
     }
     #[test]
     fn test_validate_invalid_cells() {
-        let not_ok_cells = vec![
+        let not_ok_cells = [
             Cell::new(1),
             Cell::new(2),
             Cell::new(4),
@@ -110,8 +110,7 @@ mod tests {
             Cell::new(8),
             Cell::new(9),
         ];
-        let cells = Cells::new(not_ok_cells);
-        let r = validate_cells(&cells);
+        let r = validate_cells(not_ok_cells);
         println!("{:?}", r);
     }
 }

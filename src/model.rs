@@ -7,6 +7,7 @@ mod cell;
 mod cells;
 mod col;
 mod cols;
+mod validate_cells;
 //mod collect_rows;
 //mod collect_cols;
 //mod collect_regions;

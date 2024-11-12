@@ -12,7 +12,7 @@ impl Cols {
         Self { values: [Col::new();9] }
     }
     pub(crate) fn add_to_row_column(&mut self, row: usize, cell: Cell, col: usize) {
-        self.values[col].add_cell(row,cell);
+        self.values[col].add_cell_at(row, cell);
     }
     pub fn value_at_row_col(&self, row:usize, col:usize) -> Cell {
         self.values[col].get_row(row)

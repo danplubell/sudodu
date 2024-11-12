@@ -6,11 +6,14 @@ use std::vec::IntoIter;
 pub struct Cells {
     values: Vec<Cell>,
 }
-
 impl Cells {
     pub fn new() -> Self {
         Cells { values: Vec::new() }
     }
+    pub(crate) fn with_cells(cells: Vec<Cell>) -> Self {
+        Cells { values: cells }
+    }
+
     pub fn iter(&self) -> impl Iterator<Item = &Cell> {
         self.values.iter()
     }
@@ -20,7 +23,7 @@ impl Cells {
     pub fn get_chunks(&self, size: usize) -> Chunks<Cell> {
         self.values.chunks(size)
     }
-    pub fn add_cell(&mut self,cell: Cell) {
+    pub fn add_cell(&mut self, cell: Cell) {
         self.values.push(cell)
     }
     pub fn len(&self) -> usize {
@@ -70,9 +73,12 @@ mod tests {
         expected.add_cell(Cell::new(2));
         expected.add_cell(Cell::new(3));
         expected.add_cell(Cell::new(4));
-        assert_eq!(
-            cells,
-            expected
-        );
+        assert_eq!(cells, expected);
+    }
+    #[test]
+    fn with_cells_test() {
+        let v = vec![Cell::new(1), Cell::new(2)];
+        let cells = Cells::with_cells(v);
+        assert_eq!(cells.get_at(0), Some(&Cell::new(1)))
     }
 }
