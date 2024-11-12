@@ -1,23 +1,19 @@
 use crate::model::cells::Cells;
 use crate::model::collect_cols::collect_cols;
-use crate::model::collect_regions::collect_regions;
-use crate::model::collect_rows::collect_rows;
 use crate::model::cols::Cols;
-use crate::model::regions::Regions;
-use crate::model::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Puzzle {
     cells: Cells,
-    regions: Regions,
-    rows: Rows,
+//    regions: Regions,
+//    rows: Rows,
     cols: Cols,
 }
 impl Puzzle {
     fn new(value: &str) -> Result<Self, ParsePuzzleError> {
         Puzzle::try_from(value)
     }
-    fn validate_puzzle(&self) -> bool {
+    /*fn validate_puzzle(&self) -> bool {
         //rows
         let rows_valid = self.rows.iter().all(|row| row.is_valid());
         //cols
@@ -25,6 +21,8 @@ impl Puzzle {
         //regions
         true
     }
+    
+     */
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {
@@ -48,10 +46,10 @@ impl TryFrom<&str> for Puzzle {
             return Err(ParsePuzzleError::TooShort);
         }
         let cells = Cells::from(value);
-        let rows:Rows = collect_rows(&cells);
+//        let rows:Rows = collect_rows(&cells);
         let cols:Cols = collect_cols(&cells);
-        let regions:Regions = collect_regions(&cells);
-        Ok(Puzzle { cells, regions, rows, cols })
+//        let regions:Regions = collect_regions(&cells);
+        Ok(Puzzle { cells, cols })
     }
 }
 
@@ -59,8 +57,7 @@ impl TryFrom<&str> for Puzzle {
 
 #[cfg(test)]
 mod tests {
-    use crate::puzzle_save::{ParsePuzzleError, Puzzle};
-    use std::convert::TryFrom;
+    use crate::model::puzzle::{ParsePuzzleError, Puzzle};
 
     #[test]
     fn too_short() {

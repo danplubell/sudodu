@@ -1,23 +1,28 @@
+use std::array;
 use crate::model::cells::Cells;
+use crate::model::col::Col;
 use crate::model::cols::Cols;
 
 pub fn collect_cols(cells: &Cells) -> Cols {
     let mut cols = Cols::new();
-    for (i, cell) in cells.iter().enumerate() {
-        let bucket = i % 9;
-        cols.add_to_column(bucket, &cell);
+    let chunks = cells.get_chunks(9);
+    for (i,c) in chunks.enumerate() {
+        let arr = array::from_fn(|i| c[i]);
+        cols.add_col(i,Col::with_cells(arr))
     }
     cols
 }
 
 #[cfg(test)]
 mod tests {
+    use std::array;
     use crate::model::cell::Cell;
     use crate::model::cells::Cells;
+    use crate::model::col::Col;
     use crate::model::collect_cols::collect_cols;
 
     #[test]
-    fn test_id() {
+    fn test_collect_cols() {
         // create vector of buckets
         // go through list and put cells in buckets
         let s9 = "123456789";
@@ -25,26 +30,10 @@ mod tests {
         let sol9 = ss9.join("");
 
         let cells = Cells::from(sol9.as_str());
-        let mut cols = collect_cols(&cells);
-        let col0 = vec![Cell::new(1);9];
-        let col1 = vec![Cell::new(2);9];
-        let col2 = vec![Cell::new(3);9];
-        let col3 = vec![Cell::new(4);9];
-        let col4 = vec![Cell::new(5);9];
-        let col5 = vec![Cell::new(6);9];
-        let col6 = vec![Cell::new(7);9];
-        let col7 = vec![Cell::new(8);9];
-        let col8 = vec![Cell::new(9);9];
+        let expected = array::from_fn(|i| Cell::new((i + 1) as u8));
+        let expected_col = Col::with_cells(expected);
 
-
-        assert_eq!(*cols.values()[0].values(), col0);
-        assert_eq!(*cols.values()[1].values(), col1);
-        assert_eq!(*cols.values()[2].values(), col2);
-        assert_eq!(*cols.values()[3].values(), col3);
-        assert_eq!(*cols.values()[4].values(), col4);
-        assert_eq!(*cols.values()[5].values(), col5);
-        assert_eq!(*cols.values()[6].values(), col6);
-        assert_eq!(*cols.values()[7].values(), col7);
-        assert_eq!(*cols.values()[8].values(), col8);
+        let cols = collect_cols(&cells);
+        cols.iter().for_each(|c| assert_eq!(c.values(),expected_col.values() ))
     }
 }

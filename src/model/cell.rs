@@ -1,11 +1,14 @@
+/// A cell in the soduko grid is represented here
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Cell {
      value: u8,
 }
 impl Cell {
+    /// Creates a new instance of the cell from a value
     pub fn new(value: u8) -> Self {
         Self { value }
     }
+    /// Gets the value of the Cell
     pub fn value(&self) -> u8 {
         self.value
     }

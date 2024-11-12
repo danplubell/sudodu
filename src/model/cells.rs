@@ -2,14 +2,17 @@ use crate::model::cell::Cell;
 use std::slice::Chunks;
 use std::vec::IntoIter;
 
+/// Represents a collection of Cell instances
 #[derive(PartialEq, Debug, Clone)]
 pub struct Cells {
     values: Vec<Cell>,
 }
 impl Cells {
+    /// Creates a new instance of the Cells collection
     pub fn new() -> Self {
         Cells { values: Vec::new() }
     }
+    /// Creates a new instance of the Cells collection from a vector of cells
     pub(crate) fn with_cells(cells: Vec<Cell>) -> Self {
         Cells { values: cells }
     }

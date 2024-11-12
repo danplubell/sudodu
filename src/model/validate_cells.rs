@@ -48,37 +48,10 @@ pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
         }),
     }
 }
-pub fn v_cells(cells: &[Cell]) -> Result<bool, ValidateCellsResults> {
-    let mut not_found: Vec<u8> = Vec::new();
-    let mut multiple: Vec<u8> = Vec::new();
-
-    for i in 1..=9 {
-        let mut count = 0;
-
-        cells.iter().for_each(|z| {
-            if z.value() == i {
-                count += 1;
-            }
-        });
-        match count {
-            0 => not_found.push(1),
-            2.. => multiple.push(1),
-            _ => {}
-        }
-    }
-    match (not_found.is_empty(), not_found.is_empty()) {
-        (true, true) => Ok(true),
-        _ => Err(ValidateCellsResults {
-            not_found,
-            multiple,
-        }),
-    }
-}
 
 #[cfg(test)]
 mod tests {
     use crate::model::cell::Cell;
-    use crate::model::cells::Cells;
     use crate::model::validate_cells::validate_cells;
 
     #[test]
