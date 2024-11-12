@@ -1,19 +1,19 @@
 use crate::model::cell::Cell;
 use crate::model::col::Col;
 
-#[derive(Clone, PartialEq, Debug)]
-pub struct Cols {
-    values: Vec<Col>,
+#[derive( PartialEq, Debug)]
+pub struct Cols<'a> {
+    values: [Option<&'a Col>;9],
 }
 
-impl Cols {
+impl<'a> Cols<'a> {
     
-    pub(crate) fn add_to_column(&mut self, index: usize, cell: &Cell) {
+    pub(crate) fn add_to_column(&mut self, index: usize, cell: Cell) {
         let col = &mut self.values.get_mut(index);
-        let cell = Cell::new(cell.value);
+        let cell = Cell::new(cell.value());
         match col {
             Some(c) => {
-                c.values().push(cell);
+                c.add(cell);
             }
             None => {
                 let mut new_col = Col::new();
@@ -27,26 +27,31 @@ impl Cols {
         col.and_then(|c| c.get_row(row).map(|r| Cell::new(r.value)))
     }
 
-    fn get_col(&mut self, idx: usize) -> Option<&mut Col> {
+    fn get_col(&mut self, idx: usize) -> Option<&mut Option<&'a Col>> {
         self.values.get_mut(idx)
 
     }
     pub fn validate(&self) -> bool {
         true
     }
-}
-
-impl Cols {
     pub fn new() -> Self {
-        Self { values: Vec::new() }
+        Self { values: [None;9] }
     }
+    /*
     pub fn values(&mut self) -> &mut Vec<Col> {
         &mut self.values
     }
+    
+     */
+    /*
     pub fn iter(&self ) ->impl Iterator<Item = &Col>{
         self.values.iter()
     }
+    
+     */
+
 }
+
 
 #[cfg(test)]
 mod tests {

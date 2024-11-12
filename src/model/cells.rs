@@ -23,6 +23,9 @@ impl Cells {
     pub fn add_cell(&mut self,cell: Cell) {
         self.values.push(cell)
     }
+    pub fn len(&self) -> usize {
+        self.values.len()
+    }
 }
 impl From<&str> for Cells {
     fn from(value: &str) -> Self {

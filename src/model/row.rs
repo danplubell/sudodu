@@ -7,9 +7,9 @@ pub struct Row {
     values: Cells
 }
 impl Row {
-    pub fn new(vec: Vec<Cell>) -> Self {
+    pub fn new() -> Self {
         Self {
-            values: Cells::new(vec),
+            values: Cells::new(),
         }
     }
     pub fn is_valid(&self) -> bool {
