@@ -26,6 +26,9 @@ impl Cells {
     pub fn add_cell(&mut self, cell: Cell) {
         self.values.push(cell)
     }
+    pub fn set_at(&mut self, row:usize, col:usize,cell: Cell) {
+        self.values[row * 9 + col] = cell;
+    }
 }
 impl From<&str> for Cells {
     fn from(value: &str) -> Self {
@@ -77,5 +80,19 @@ mod tests {
         let v = vec![Cell::new(1), Cell::new(2)];
         let cells = Cells::with_cells(v);
         assert_eq!(cells.get_at(0), Some(&Cell::new(1)))
+    }
+    #[test]
+    fn set_at_test() {
+        let solution =
+            "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
+        let mut cells = Cells::from(solution);
+        cells.set_at(0,8, Cell::new(0));
+        assert_eq!(cells.get_at(8).unwrap().value(), 0);
+        assert_eq!(cells.get_at(9).unwrap().value(), 5);
+        cells.set_at(1,0, Cell::new(0));
+        assert_eq!(cells.get_at(9).unwrap().value(),0);
+        assert_eq!(cells.get_at(80).unwrap().value(), 7);
+        cells.set_at(8,8, Cell::new(0));
+        assert_eq!(cells.get_at(80).unwrap().value(), 0);
     }
 }

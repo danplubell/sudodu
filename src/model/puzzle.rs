@@ -1,3 +1,4 @@
+use crate::model::cell::Cell;
 use crate::model::cells::Cells;
 use crate::model::collect_cols::collect_cols;
 use crate::model::collect_regions::collect_regions;
@@ -22,6 +23,15 @@ impl Puzzle {
         let cols_valid = self.cols.iter().all(|col| col.is_valid());
         let regions_valid = self.regions.iter().all(|region|region.is_valid());
         matches!((rows_valid, cols_valid, regions_valid), (true,true, true))
+    }
+    pub(crate) fn cells(self) -> Cells {
+        self.cells
+    }
+    pub fn with_cells(cells: Cells) -> Self {
+        let rows:Rows = collect_rows(&cells);
+        let cols:Cols = collect_cols(&cells);
+        let regions:Regions = collect_regions(&cells);
+        Puzzle { cells, cols, rows, regions }
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
