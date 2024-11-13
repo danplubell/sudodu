@@ -12,6 +12,9 @@ impl Cell {
     pub fn value(&self) -> u8 {
         self.value
     }
+    pub fn set_value(&mut self, value: u8) {
+        self.value = value;
+    }
 }
 
 #[cfg(test)]

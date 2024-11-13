@@ -32,6 +32,9 @@ impl Cells {
     pub fn len(&self) -> usize {
         self.values.len()
     }
+    pub fn set_at(&mut self,index:usize, value: u8) {
+        self.values.get_mut(index).unwrap().set_value(value);
+    }
 }
 impl From<&str> for Cells {
     fn from(value: &str) -> Self {
