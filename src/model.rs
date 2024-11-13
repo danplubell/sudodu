@@ -13,6 +13,8 @@ mod puzzle;
 mod rows;
 mod row;
 mod collect_rows;
+mod region;
+mod regions;
 //mod collect_rows;
 //mod collect_cols;
 //mod collect_regions;
