@@ -15,6 +15,7 @@ mod row;
 mod collect_rows;
 mod region;
 mod regions;
+mod collect_regions;
 //mod collect_rows;
 //mod collect_cols;
 //mod collect_regions;

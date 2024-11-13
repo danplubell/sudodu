@@ -1,13 +1,15 @@
 use crate::model::cells::Cells;
 use crate::model::collect_cols::collect_cols;
+use crate::model::collect_regions::collect_regions;
 use crate::model::collect_rows::collect_rows;
 use crate::model::cols::Cols;
+use crate::model::regions::Regions;
 use crate::model::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Puzzle {
     cells: Cells,
-//    regions: Regions,
+    regions: Regions,
     rows: Rows,
     cols: Cols,
 }
@@ -15,16 +17,12 @@ impl Puzzle {
     fn new(value: &str) -> Result<Self, ParsePuzzleError> {
         Puzzle::try_from(value)
     }
-    /*fn validate_puzzle(&self) -> bool {
-        //rows
+    fn validate_puzzle(&self) -> bool {
         let rows_valid = self.rows.iter().all(|row| row.is_valid());
-        //cols
         let cols_valid = self.cols.iter().all(|col| col.is_valid());
-        //regions
-        true
+        let regions_valid = self.regions.iter().all(|region|region.is_valid());
+        matches!((rows_valid, cols_valid, regions_valid), (true,true, true))
     }
-    
-     */
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {
@@ -50,8 +48,8 @@ impl TryFrom<&str> for Puzzle {
         let cells = Cells::from(value);
         let rows:Rows = collect_rows(&cells);
         let cols:Cols = collect_cols(&cells);
-//        let regions:Regions = collect_regions(&cells);
-        Ok(Puzzle { cells, cols, rows })
+        let regions:Regions = collect_regions(&cells);
+        Ok(Puzzle { cells, cols, rows, regions })
     }
 }
 
@@ -72,5 +70,20 @@ mod tests {
     fn not_all_digits() {
         let err = Puzzle::try_from("aaaaaaaaaaaaaaa").unwrap_err();
         assert_eq!(err, ParsePuzzleError::HasAlpha);
+    }
+    #[test]
+    fn validate_valid_puzzle() {
+        let solution =
+            "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
+        let puzzle = Puzzle::new(solution);
+        let p = puzzle.unwrap();
+        assert!(p.validate_puzzle());
+    }
+    #[test]
+    fn validate_invalid_puzzle() {
+        let puzzle_data = "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
+        let puzzle = Puzzle::new(puzzle_data);
+        let p = puzzle.unwrap();
+        assert!(!p.validate_puzzle());
     }
 }

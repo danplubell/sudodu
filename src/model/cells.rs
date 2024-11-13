@@ -17,9 +17,6 @@ impl Cells {
         Cells { values: cells }
     }
 
-    pub fn iter(&self) -> impl Iterator<Item = &Cell> {
-        self.values.iter()
-    }
     pub fn get_at(&self, index: usize) -> Option<&Cell> {
         self.values.get(index)
     }
@@ -28,9 +25,6 @@ impl Cells {
     }
     pub fn add_cell(&mut self, cell: Cell) {
         self.values.push(cell)
-    }
-    pub fn len(&self) -> usize {
-        self.values.len()
     }
 }
 impl From<&str> for Cells {

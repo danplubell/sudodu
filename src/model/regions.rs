@@ -10,12 +10,13 @@ impl Regions {
             values: [Region::new();9]
         }
     }
-    pub fn with_regions(regions:[Region;9]) -> Self {
-        Regions {
-            values: regions
-        }
+    pub fn add_region_at(&mut self,region: Region, idx: usize) {
+       self.values[idx] = region;
     }
-    pub fn add_region(&mut self,region: Region) {
-       todo!();
+    pub fn get_at(&self,index:usize) -> Region {
+        self.values[index]
+    }
+    pub fn iter(&self) -> impl Iterator<Item = &Region> {
+        self.values.iter()
     }
 }

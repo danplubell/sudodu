@@ -1,4 +1,5 @@
 use crate::model::cell::Cell;
+use crate::model::validate_cells::validate_cells;
 
 #[derive(Clone, PartialEq, Debug, Copy)]
 pub struct Region {
@@ -14,5 +15,9 @@ impl Region {
         Self {
             values: cells
         }
+    }
+    pub fn is_valid(&self) -> bool {
+        let r = validate_cells(self.values);
+        r.is_ok()
     }
 }
