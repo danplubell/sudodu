@@ -15,6 +15,8 @@ mod row;
 mod collect_rows;
 mod region;
 mod regions;
+mod collect_regions;
+mod is_safe;
 mod column;
 mod collect_columns;
 mod columns;

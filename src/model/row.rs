@@ -1,5 +1,4 @@
 use crate::model::cell::Cell;
-use crate::model::cells::Cells;
 use crate::model::validate_cells::validate_cells;
 
 #[derive(Clone, PartialEq, Debug, Copy)]

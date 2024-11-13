@@ -25,12 +25,6 @@ impl Cols {
         self.values[index] = col;
     }
 
-    /*
-    pub fn values(&mut self) -> &mut Vec<Col> {
-        &mut self.values
-    }
-
-     */
 
     pub fn iter(&self) -> impl Iterator<Item = &Col> {
         self.values.iter()
@@ -48,7 +42,7 @@ mod tests {
         cols.add_to_row_column(0, 0, Cell::new(5));
         assert_eq!(cols.value_at_row_col(0, 0), Cell::new(5));
         cols.add_to_row_column(1, 0, Cell::new(6));
-        assert_eq!(cols.value_at_row_col(0, 1), Cell::new(6));
+        assert_eq!(cols.value_at_row_col(1, 0), Cell::new(6));
     }
     #[test]
     fn test_value_at_row_col() {

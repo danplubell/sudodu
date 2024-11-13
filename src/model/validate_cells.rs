@@ -24,9 +24,6 @@ pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
     let mut cell_reg = [0u8; 10];
     let mut not_found: Vec<u8> = Vec::new();
     let mut multiple: Vec<u8> = Vec::new();
-    for (i,cell) in cells.iter().enumerate() {
-        
-    }
     cells.iter().for_each(|c| {
         let r = cell_reg.get_mut(c.value() as usize);
         if let Some(v) = r {
@@ -55,7 +52,7 @@ mod tests {
     use crate::model::validate_cells::validate_cells;
 
     #[test]
-    fn test_multiple_cells() {
+    fn test_valid_cells() {
         let ok_cells = [
             Cell::new(1),
             Cell::new(2),
@@ -68,7 +65,7 @@ mod tests {
             Cell::new(9),
         ];
         let r = validate_cells(ok_cells);
-        println!("{:?}", r);
+        assert!(r.is_ok());
     }
     #[test]
     fn test_validate_invalid_cells() {
@@ -84,6 +81,9 @@ mod tests {
             Cell::new(9),
         ];
         let r = validate_cells(not_ok_cells);
-        println!("{:?}", r);
+        let err = r.unwrap_err();
+        assert_eq!(err.not_found, [2, 5]);
+        assert_eq!(err.multiple, [3,4 ]);
+        
     }
 }
