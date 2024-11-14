@@ -37,23 +37,32 @@ impl<'a> Columns<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cells::Cells;
     use crate::model::columns::Columns;
+    use crate::model::cells::Cells;
 
     #[test]
     fn test_collect_cols() {
-        // create vector of buckets
-        // go through list and put cells in buckets
         let s9 = "123456789";
         let ss9 = [s9; 9];
         let sol9 = ss9.join("");
 
-        let mut cells = Cells::from(sol9.as_str());
-        let mut columns = Columns::new();
-        columns.collect_columns(&mut cells);
-        println!("{:?}", columns);
+        let mut cells;
+        {
+            let mut columns = Columns::new();
+            cells = Cells::from(sol9.as_str());
+            columns.collect_columns(&mut cells);
+            println!("initial columns {:?}", columns);
+        }
 
-        cells.set_at(0,8u8);
-        println!("{:?}", columns);
+        let mut new_cells;
+        let mut columns;
+        {
+            columns = Columns::new();
+            new_cells = Cells::from(sol9.as_str());
+            columns.collect_columns(&mut new_cells);
+        }
+        new_cells.set_at(0, 8u8);
+        println!("changed columns {:?}", columns);
+
     }
 }
