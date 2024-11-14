@@ -1,15 +1,14 @@
 use crate::model::cells::Cells;
 use crate::model::columns::Columns;
 
-pub fn collect_columns<'a>(cells: Cells) -> Columns<'a> {
-    let mut cols = Columns::new();
+pub fn collect_columns<'a>(cells: &Cells, columns: &mut Columns)  {
+   // let mut cols = Columns::new();
     let chunks = cells.get_chunks(9);
     for (row,c) in chunks.enumerate() {
         for (col, cell) in c.iter().enumerate() {
-            cols.add_to_column(col, cell );
+            columns.add_to_column(col, cell );
         }       
     }
-    cols
 }
 
 #[cfg(test)]
