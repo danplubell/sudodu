@@ -20,6 +20,9 @@ impl Cells {
     pub fn get_at(&self, index: usize) -> Option<&Cell> {
         self.values.get(index)
     }
+    pub fn get_at_mut(&mut self, index:usize) -> &mut Cell {
+        self.values.get_mut(index).unwrap()
+    }
     pub fn get_chunks(&self, size: usize) -> Chunks<Cell> {
         self.values.chunks(size)
     }
@@ -33,7 +36,7 @@ impl Cells {
         let index = row * 9 + col;
         self.set_at(index, value);
     }
-    pub fn set_at(&mut self,index:usize, value: u8) {
+    pub fn set_at(&mut self, index:usize, value: u8) {
         self.values.get_mut(index).unwrap().set_value(value);
     }
 }
