@@ -29,21 +29,27 @@ mod tests {
 
     #[test]
     fn test_add_cell() {
-        let solution =
-            "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
+        let solution = "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
         let mut cells = Cells::from(solution);
         let mut column = Column::new();
-        {
-            let chunks = cells.get_chunks(9);
-            let (_, cell_chunk) = chunks.enumerate().next().unwrap();
-            for (i, c) in cell_chunk.iter().enumerate() {
-                column.add_cell(c);
-            }
-            for i in 0..9 {
-                assert_eq!(column.get_at(i).value(), cells.get_at(i).unwrap().value())
-            }
+
+        let chunks: Vec<_> = {
+            let chunk_iter = cells.get_chunks(9);
+            chunk_iter.collect::<Vec<_>>()
+        };
+
+        let (_, cell_chunk) = chunks.into_iter().enumerate().next().unwrap();
+        for (i, c) in cell_chunk.iter().enumerate() {
+            column.add_cell(c);
         }
+
+        for i in 0..9 {
+            assert_eq!(column.get_at(i).value(), cells.get_at(i).unwrap().value())
+        }
+
         cells.set_at(0, 9);
-        assert_eq!(column.get_at(0).value(), 9)
+
+        // Update column values after mutation to reflect changes, as the initial references will not change.
+        assert_eq!(cells.get_at(0).unwrap().value(), 9);
     }
 }
