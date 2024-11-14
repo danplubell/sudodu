@@ -13,7 +13,7 @@ impl<'a> Columns<'a> {
             values: vec![Column::new();9]//Vec::with_capacity(9),
         }
     }
-    pub fn collect_columns(&mut self,cells: &'a Cells)  {
+    pub fn collect_columns(&mut self,cells: &'a mut Cells)  {
         // let mut cols = Columns::new();
         let chunks = cells.get_chunks(9);
         for (row,c) in chunks.enumerate() {
@@ -50,10 +50,10 @@ mod tests {
 
         let mut cells = Cells::from(sol9.as_str());
         let mut columns = Columns::new();
-        columns.collect_columns(&cells);
+        columns.collect_columns(&mut cells);
         println!("{:?}", columns);
 
-        //cells.set_at(0,8u8);
-        //println!("{:?}", cols);
+        cells.set_at(0,8u8);
+        println!("{:?}", columns);
     }
 }
