@@ -1,4 +1,4 @@
-use crate::model::row::Row;
+use crate::model::row_save::Row;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Rows {
@@ -26,8 +26,8 @@ impl Rows {
 mod tests {
     use std::array;
     use crate::model::cell::Cell;
-    use crate::model::row::Row;
-    use crate::model::rows::Rows;
+    use crate::model::row_save::Row;
+    use crate::model::rows_save::Rows;
 
     #[test]
     fn test_new() {

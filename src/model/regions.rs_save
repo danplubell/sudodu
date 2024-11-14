@@ -1,4 +1,4 @@
-use crate::model::region::Region;
+use crate::model::region_save::Region;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Regions {

@@ -28,7 +28,7 @@ pub fn collect_regions(cells: &Cells) -> Regions {
 mod tests {
     use crate::model::cell::Cell;
     use crate::model::cells::Cells;
-    use crate::model::collect_regions::collect_regions;
+    use crate::model::collect_regions_save::collect_regions;
     use crate::model::region::Region;
 
     #[test]

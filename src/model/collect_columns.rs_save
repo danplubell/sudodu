@@ -14,7 +14,7 @@ pub fn collect_columns<'a>(cells: &Cells, columns: &mut Columns)  {
 #[cfg(test)]
 mod tests {
     use crate::model::cells::Cells;
-    use crate::model::collect_columns::collect_columns;
+    use crate::model::collect_columns_save::collect_columns;
 
     #[test]
     fn test_collect_cols() {

@@ -22,7 +22,7 @@ impl Row {
 #[cfg(test)]
 mod tests {
     use crate::model::cell::Cell;
-    use crate::model::row::Row;
+    use crate::model::row_save::Row;
     use std::array;
 
     #[test]

@@ -34,7 +34,7 @@ impl Cols {
 #[cfg(test)]
 mod tests {
     use crate::model::cell::Cell;
-    use crate::model::cols::Cols;
+    use crate::model::cols_save1::Cols;
 
     #[test]
     fn test_add_column() {

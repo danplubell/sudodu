@@ -19,7 +19,7 @@ mod tests {
     use std::array;
     use crate::model::cell::Cell;
     use crate::model::cells::Cells;
-    use crate::model::collect_rows::collect_rows;
+    use crate::model::collect_rows_save::collect_rows;
     use crate::model::row::Row;
 
     #[test]

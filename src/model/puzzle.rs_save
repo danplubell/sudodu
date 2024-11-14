@@ -1,17 +1,12 @@
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
-use crate::model::collect_cols::collect_cols;
-use crate::model::collect_regions::collect_regions;
-use crate::model::collect_rows::collect_rows;
 use crate::model::cols::Cols;
-use crate::model::regions::Regions;
-use crate::model::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Puzzle {
     cells: Cells,
-    regions: Regions,
-    rows: Rows,
+//    regions: Regions,
+//    rows: Rows,
     cols: Cols,
 }
 impl Puzzle {
@@ -19,19 +14,21 @@ impl Puzzle {
         Puzzle::try_from(value)
     }
     fn validate_puzzle(&self) -> bool {
-        let rows_valid = self.rows.iter().all(|row| row.is_valid());
-        let cols_valid = self.cols.iter().all(|col| col.is_valid());
-        let regions_valid = self.regions.iter().all(|region|region.is_valid());
-        matches!((rows_valid, cols_valid, regions_valid), (true,true, true))
+//        let rows_valid = self.rows.iter().all(|row| row.is_valid());
+//        let cols_valid = self.cols.iter().all(|col| col.is_valid());
+//        let regions_valid = self.regions.iter().all(|region|region.is_valid());
+//        matches!((rows_valid, cols_valid, regions_valid), (true,true, true))
+        todo!();
+        true
     }
     pub(crate) fn cells(self) -> Cells {
         self.cells
     }
-    pub fn with_cells(cells: Cells) -> Self {
-        let rows:Rows = collect_rows(&cells);
-        let cols:Cols = collect_cols(&cells);
-        let regions:Regions = collect_regions(&cells);
-        Puzzle { cells, cols, rows, regions }
+    pub fn with_cells(cells: Cells)  {
+//        let rows:Rows = collect_rows(&cells);
+//        let cols:Cols = collect_cols(&cells);
+//        let regions:Regions = collect_regions(&cells);
+       // Puzzle { cells, cols, rows, regions }
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
@@ -57,7 +54,7 @@ impl TryFrom<&str> for Puzzle {
         }
         let cells = Cells::from(value);
         let rows:Rows = collect_rows(&cells);
-        let cols:Cols = collect_cols(&cells);
+        //let cols:Cols = collect_cols(&cells);
         let regions:Regions = collect_regions(&cells);
         Ok(Puzzle { cells, cols, rows, regions })
     }
@@ -67,7 +64,7 @@ impl TryFrom<&str> for Puzzle {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::puzzle::{ParsePuzzleError, Puzzle};
+    use crate::model::puzzle_save::{ParsePuzzleError, Puzzle};
 
     #[test]
     fn too_short() {

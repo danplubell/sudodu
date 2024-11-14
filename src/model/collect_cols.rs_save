@@ -18,7 +18,7 @@ mod tests {
     use crate::model::cell::Cell;
     use crate::model::cells::Cells;
     use crate::model::col::Col;
-    use crate::model::collect_cols::collect_cols;
+    use crate::model::collect_cols_save::collect_cols;
 
     #[test]
     fn test_collect_cols() {
