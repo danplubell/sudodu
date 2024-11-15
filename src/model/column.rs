@@ -10,12 +10,21 @@ impl Column {
             values: Cells::new()
         }
     }
-    pub fn add_cell(&self, cell:Cell) {
-        todo!();
+    pub fn add_cell(&mut self, cell:Cell) {
+        self.values.add_cell(cell);
     }
 }
 
 #[cfg(test)] 
 mod tests {
-    
+    use crate::model::cell::Cell;
+    use crate::model::column::Column;
+
+    #[test]
+    fn test_add_cell {
+        let mut column = Column::new();
+        column.add_cell(Cell::new(0));
+        column.add_cell(Cell::new(2));
+        
+    }
 }
