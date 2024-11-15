@@ -1,6 +1,6 @@
-use crate::model::cell::Cell;
-use crate::model::cells::Cells;
-use crate::model::column::Column;
+use crate::model::cell_save::Cell;
+use crate::model::cells_save::Cells;
+use crate::model::column_save::Column;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Columns<'a> {
@@ -36,8 +36,8 @@ impl<'a> Columns<'a> {
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::columns::Columns;
-    use crate::model::cells::Cells;
+    use crate::model::columns_save::Columns;
+    use crate::model::cells_save::Cells;
 
     #[test]
     fn test_collect_cols() {

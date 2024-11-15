@@ -19,7 +19,7 @@ impl Cell {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cell::Cell;
+    use crate::model::cell_save::Cell;
 
     #[test]
     fn new_get_cell() {

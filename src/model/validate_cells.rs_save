@@ -1,4 +1,4 @@
-use crate::model::cell::Cell;
+use crate::model::cell_save::Cell;
 
 #[derive(Debug, thiserror::Error)]
 #[error("`{invalid_number}` is not a valid number")]
@@ -48,8 +48,8 @@ pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cell::Cell;
-    use crate::model::validate_cells::validate_cells;
+    use crate::model::cell_save::Cell;
+    use crate::model::validate_cells_save::validate_cells;
 
     #[test]
     fn test_valid_cells() {

@@ -1,4 +1,4 @@
-use crate::model::cell::Cell;
+use crate::model::cell_save::Cell;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Column<'a> {
@@ -24,8 +24,8 @@ impl<'a> Column<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cells::Cells;
-    use crate::model::column::Column;
+    use crate::model::cells_save::Cells;
+    use crate::model::column_save::Column;
 
     #[test]
     fn test_add_cell() {
@@ -33,6 +33,7 @@ mod tests {
         let mut cells = Cells::from(solution);
         let mut column = Column::new();
 
+        /*
         let chunks: Vec<_> = {
             let chunk_iter = cells.get_chunks(9);
             chunk_iter.collect::<Vec<_>>()
@@ -43,6 +44,20 @@ mod tests {
             column.add_cell(c);
         }
 
+
+         */
+        let chunks = {
+            let chunk = cells.get_chunks(9);
+            chunk
+        };
+        let (_, cell_chunk) = chunks.into_iter().enumerate().next().unwrap();
+        for (i, c) in cell_chunk.iter().enumerate() {
+            column.add_cell(c);
+        }
+
+        for (i, c) in cell_chunk.iter().enumerate() {
+            column.add_cell(c);
+        }
         for i in 0..9 {
             assert_eq!(column.get_at(i).value(), cells.get_at(i).unwrap().value())
         }
