@@ -146,11 +146,16 @@ mod tests {
         for i in 0..18 {
             cells.add_cell(Cell::new((i % 9) as u8))
         }
+        assert_eq!(cells.get_inner_value_at(0), 0);
         assert_eq!(cells.values.len(), 18);
-        for c in cells.values {
-            ref_cells.add_cell(c);
+        for c in &cells.values {
+            ref_cells.add_cell(c.clone());
         }
         println!("{:?}", ref_cells);
+        // set the source of truth position 0 to 9
         cells.set_inner_value_at(0, 9);
+        // ref_cells should show the new value because it is a reference to the source
+        println!("{:?}", ref_cells);
+        assert_eq!(ref_cells.get_inner_value_at(0), 9);
     }
 }
