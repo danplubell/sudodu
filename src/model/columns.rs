@@ -1,6 +1,5 @@
-use crate::model::cells::Cells;
+use crate::model::column::Column;
 
 pub struct Columns {
-    values: Vec<Cells>,
-    
+    values: Vec<Column>,
 }
