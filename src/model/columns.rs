@@ -34,7 +34,30 @@ impl<'a> Columns<'a> {
         self.values
     }
 }
+#[cfg(test)]
+mod tests {
+    use crate::model::columns::Columns;
+    use crate::model::cells::Cells;
 
+    #[test]
+    fn test_collect_cols() {
+        let s9 = "123456789";
+        let ss9 = [s9; 9];
+        let sol9 = ss9.join("");
+
+        let mut cells = Cells::from(sol9.as_str());
+        let mut columns = Columns::new();
+        columns.collect_columns(&mut cells);
+        println!("initial columns {:?}", columns);
+
+        let mut new_cells = Cells::from(sol9.as_str());
+        let mut new_columns = Columns::new();
+        new_columns.collect_columns(&mut new_cells);
+        new_cells.set_at(0, 8u8);
+        println!("changed columns {:?}", new_columns);
+    }
+}
+/*
 #[cfg(test)]
 mod tests {
     use crate::model::columns::Columns;
@@ -60,9 +83,10 @@ mod tests {
             columns = Columns::new();
             new_cells = Cells::from(sol9.as_str());
             columns.collect_columns(&mut new_cells);
+            new_cells.set_at(0, 8u8);
+            println!("changed columns {:?}", columns);
         }
-        new_cells.set_at(0, 8u8);
-        println!("changed columns {:?}", columns);
-
     }
 }
+
+ */
