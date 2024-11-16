@@ -11,10 +11,26 @@ impl Cell {
             value: Rc::new(RefCell::new(value)),
         }
     }
-    pub fn value(&self) -> u8 {
-        self.value.take()
+    pub fn get_value(&self) -> u8 {
+        *self.value.borrow()
     }
-    pub fn replace(&self, value: u8) {
-        self.value.replace(value);
+    pub fn replace_value(&self, value: u8) {
+        *self.value.borrow_mut() = value;
+    }
+}
+#[cfg(test)]
+mod tests {
+    use crate::model::cell::Cell;
+
+    #[test]
+    fn test_get_value() {
+        let cell = Cell::new(8);
+        assert_eq!(cell.get_value(), 8);
+    }
+    #[test]
+    fn test_replace_value() {
+        let cell = Cell::new(9);
+        cell.replace_value(0);
+        assert_eq!(cell.get_value(), 0);
     }
 }

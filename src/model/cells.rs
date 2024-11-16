@@ -1,7 +1,6 @@
 use crate::model::cell::Cell;
 use std::cell::RefCell;
-use std::rc::Rc;
-
+/*
 #[derive(PartialEq, Debug, Clone)]
 pub struct RefCells {
     values: RefCell<Vec<Cell>>,
@@ -12,10 +11,12 @@ impl RefCells {
             values: RefCell::new(Vec::new()),
         }
     }
-    pub fn add_cell(&self,cell:Cell) {
+    pub fn add_cell(&self, cell: Cell) {
         self.values.borrow_mut().push(cell)
     }
 }
+
+ */
 #[derive(PartialEq, Debug, Clone)]
 pub struct Cells {
     values: Vec<Cell>,
@@ -27,24 +28,30 @@ impl Cells {
     pub fn add_cell_by_value(&mut self, value: u8) {
         self.values.push(Cell::new(value));
     }
-    pub fn add_cell(&mut self, cell:Cell) {
+    pub fn add_cell(&mut self, cell: Cell) {
         self.values.push(cell);
     }
     pub fn get_inner_value_at(&self, index: usize) -> u8 {
-        self.values.get(index).unwrap().value()
+        self.values.get(index).unwrap().get_value()
     }
     pub fn set_inner_value_at(&mut self, index: usize, value: u8) {
         if let Some(cell) = self.values.get(index) {
-            cell.replace(value);
+            cell.replace_value(value);
         }
     }
     pub fn set_inner_at_row_col(&mut self, row: usize, col: usize, value: u8) {
         let index = row * 9 + col;
         self.set_inner_value_at(index, value);
     }
-    pub fn get_inner_at_row_col(&self, row:usize, col:usize) -> u8 {
+    pub fn get_inner_at_row_col(&self, row: usize, col: usize) -> u8 {
         let index = row * 9 + col;
         self.get_inner_value_at(index)
+    }
+    pub fn get_at(&self, index: usize) -> &Cell {
+        self.values.get(index).unwrap()
+    }
+    pub fn get_at_mut(&mut self, index: usize) -> &mut Cell {
+        self.values.get_mut(index).unwrap()
     }
 }
 
