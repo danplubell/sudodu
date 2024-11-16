@@ -1,4 +1,4 @@
-use crate::model::cell_save::Cell;
+use crate::model::cells::Cells;
 
 #[derive(Debug, thiserror::Error)]
 #[error("`{invalid_number}` is not a valid number")]
@@ -16,20 +16,23 @@ enum ErrorReason {
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct ValidateCellsResults {
-    not_found: Vec<u8>,
-    multiple: Vec<u8>,
+    pub not_found: Vec<u8>,
+    pub multiple: Vec<u8>,
 }
 
-pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
+pub fn validate_cells(cells: &Cells) -> Result<bool, ValidateCellsResults> {
     let mut cell_reg = [0u8; 10];
     let mut not_found: Vec<u8> = Vec::new();
     let mut multiple: Vec<u8> = Vec::new();
-    cells.iter().for_each(|c| {
-        let r = cell_reg.get_mut(c.value() as usize);
+    
+    // count the number of times a value is in the cells collection
+    cells.values().iter().for_each(|c| {
+        let r = cell_reg.get_mut(c.get_value() as usize);
         if let Some(v) = r {
             *v += 1
         }
     });
+    // skip 0 and see if a number is missing or has multiples
     cell_reg.iter().skip(1).enumerate().for_each(|(i,c)|{
         match *c {
             0 => not_found.push(i as u8),
@@ -37,7 +40,9 @@ pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
             _=>{}
         }
     });
-    match (not_found.is_empty(), not_found.is_empty()) {
+    
+    // return results
+    match (not_found.is_empty(), multiple.is_empty()) {
         (true, true) => Ok(true),
         _ => Err(ValidateCellsResults {
             not_found,
@@ -48,39 +53,23 @@ pub fn validate_cells(cells: [Cell; 9]) -> Result<bool, ValidateCellsResults> {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cell_save::Cell;
-    use crate::model::validate_cells_save::validate_cells;
+    use crate::model::cells::Cells;
+    use crate::model::validate_cells::validate_cells;
 
     #[test]
     fn test_valid_cells() {
-        let ok_cells = [
-            Cell::new(1),
-            Cell::new(2),
-            Cell::new(3),
-            Cell::new(4),
-            Cell::new(5),
-            Cell::new(6),
-            Cell::new(7),
-            Cell::new(8),
-            Cell::new(9),
-        ];
-        let r = validate_cells(ok_cells);
+        let ok_values = [1u8,2,3,4,5,6,7,8,9];
+        let ok_cells = Cells::new();
+        ok_values.iter().for_each(|x| {ok_cells.add_cell_by_value(*x)});
+        let r = validate_cells(&ok_cells);
         assert!(r.is_ok());
     }
     #[test]
     fn test_validate_invalid_cells() {
-        let not_ok_cells = [
-            Cell::new(1),
-            Cell::new(2),
-            Cell::new(4),
-            Cell::new(4),
-            Cell::new(5),
-            Cell::new(5),
-            Cell::new(7),
-            Cell::new(8),
-            Cell::new(9),
-        ];
-        let r = validate_cells(not_ok_cells);
+        let not_ok_values = [1,2,4,4,5,5,7,8,9];
+        let not_ok_cells = Cells::new();
+        not_ok_values.iter().for_each(|x| {not_ok_cells.add_cell_by_value(*x)});
+        let r = validate_cells(&not_ok_cells);
         let err = r.unwrap_err();
         assert_eq!(err.not_found, [2, 5]);
         assert_eq!(err.multiple, [3,4 ]);

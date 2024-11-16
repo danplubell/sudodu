@@ -2,6 +2,7 @@ use crate::model::cell::Cell;
 use crate::model::cells::Cells;
 use std::cell::RefCell;
 use std::rc::Rc;
+use crate::model::validate_cells::validate_cells;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Regions {
@@ -21,7 +22,7 @@ impl Regions {
     pub fn get_region(&self, region: usize) -> Cells {
         self.values.borrow().get(region).unwrap().clone()
     }
-    pub fn collect_regions(&self, cells: Cells) {
+    pub fn collect_regions(&self, cells: &Cells) {
         // These are the root nodes
         // From each root we iterate from the root to
         let roots: [usize; 9] = [0, 3, 6, 27, 30, 33, 54, 57, 60];
@@ -39,6 +40,10 @@ impl Regions {
             }
         }
     }
+    pub fn is_valid(&self)->bool {
+        self.values.borrow().iter().all(|c| validate_cells(c).is_ok())
+    }
+
 }
 #[cfg(test)]
 mod tests {
@@ -63,7 +68,7 @@ mod tests {
             .iter()
             .for_each(|v| last_region_cells.add_cell(Cell::new(*v)));
 
-        regions.collect_regions(cells);
+        regions.collect_regions(&cells);
         let first_region = regions.get_region(0);
         assert_eq!(first_region, first_region_cells);
         let last_region = regions.get_region(8);

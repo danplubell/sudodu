@@ -2,6 +2,8 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
+use crate::model::validate_cells::validate_cells;
+
 #[derive(PartialEq, Debug, Clone)]
 pub struct Columns {
     values: Rc<RefCell<Vec<Cells>>>,
@@ -19,7 +21,7 @@ impl Columns {
     pub fn get_column(&self, col:usize) -> Cells {
         self.values.borrow().get(col).unwrap().clone()
     }
-    pub fn collect_columns(&self,cells: Cells)  {
+    pub fn collect_columns(&self,cells: &Cells)  {
         let values = cells.values();
         let chunks = values.chunks(9);
         for c in chunks {
@@ -30,6 +32,9 @@ impl Columns {
     }
     pub fn values(&self)->Vec<Cells>{
         self.values.borrow().clone()
+    }
+    pub fn is_valid(&self)->bool {
+        self.values.borrow().iter().all(|c| validate_cells(c).is_ok())
     }
 }
 #[cfg(test)]
@@ -57,7 +62,7 @@ mod tests {
 
         let cells = Cells::from(puzzle_data);
         let columns = Columns::new();
-        columns.collect_columns(cells);
+        columns.collect_columns(&cells);
         assert_eq!(columns.values().len(), 9);
         println!("{:?}", columns);
     }
