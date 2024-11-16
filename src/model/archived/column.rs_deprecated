@@ -24,10 +24,10 @@ impl Column {
 #[cfg(test)]
 mod tests {
     use crate::model::cell::Cell;
-    use crate::model::column::Column;
+    use crate::model::column_deprecated::Column;
 
     #[test]
-    fn test_add_cell() {
+    fn test_add_cell_get_at() {
         let column = Column::new();
         column.add_cell(Cell::new(0));
         column.add_cell(Cell::new(2));

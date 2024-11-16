@@ -2,24 +2,25 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
+use crate::model::column::Column;
 #[derive(PartialEq, Debug, Clone)]
 pub struct Columns {
-    values: Rc<RefCell<Vec<Cells>>>,
+    values: Rc<RefCell<Vec<Column>>>,
 }
 impl Columns {
     pub fn new()->Self{
         Self {
-            values: Rc::new(RefCell::new((0..9).map(|_| Cells::new()).collect())),        }
+            values: Rc::new(RefCell::new((0..9).map(|_| Column::new()).collect())),        }
     }
     pub fn add_to_column(&self, col: usize, cell: Cell) {
         if let Some(column) = self.values.borrow_mut().get_mut(col) {
             column.add_cell(cell);
         }
     }
-    pub fn get_column(&self, col:usize) -> Cells {
+    pub fn get_column(&self, col:usize) -> Column {
         self.values.borrow().get(col).unwrap().clone()
     }
-    pub fn collect_columns(&self,cells: Cells)  {
+    pub fn collect_columns(&mut self,cells: Cells)  {
         let values = cells.values();
         let chunks = values.chunks(9);
         for c in chunks {
@@ -28,7 +29,7 @@ impl Columns {
             }
         }
     }
-    pub fn values(&self)->Vec<Cells>{
+    pub fn values(&self)->Vec<Column>{
         self.values.borrow().clone()
     }
 }
@@ -56,9 +57,8 @@ mod tests {
         let puzzle_data = "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
 
         let cells = Cells::from(puzzle_data);
-        let columns = Columns::new();
+        let mut columns = Columns::new();
         columns.collect_columns(cells);
         assert_eq!(columns.values().len(), 9);
-        println!("{:?}", columns);
     }
 }
