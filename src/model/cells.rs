@@ -1,10 +1,10 @@
 use crate::model::cell::Cell;
 use std::cell::RefCell;
 use std::rc::Rc;
-type SmartVector = Rc<RefCell<Vec<Cell>>>;
+
 #[derive(PartialEq, Debug, Clone)]
 pub struct Cells {
-    values: SmartVector,
+    values: Rc<RefCell<Vec<Cell>>>,
 }
 impl Cells {
     pub fn new() -> Self {
@@ -35,8 +35,8 @@ impl Cells {
     pub fn get_at(&self, index: usize) -> Cell {
         self.values.borrow().get(index).cloned().unwrap()
     }
-    pub fn values(&self)->Rc<RefCell<Vec<Cell>>> {
-        self.values.clone()
+    pub fn values(&self) -> Vec<Cell> {
+        self.values.borrow().clone()
     }
 }
 
@@ -44,9 +44,9 @@ impl From<&str> for Cells {
     fn from(value: &str) -> Self {
         let values = value
             .chars()
-            .map(|c| Cell::new(c.to_digit(10).unwrap() as u8))
-            .collect();
-        Self { values }
+            .map(|c| Cell::new(c.to_digit(10).unwrap() as u8)).collect();
+
+        Self { values: Rc::new(RefCell::new(values)) }
     }
 }
 
@@ -76,17 +76,16 @@ impl IntoIterator for Cells {
 mod tests {
     use crate::model::cell::Cell;
     use crate::model::cells::Cells;
-    use std::rc::Rc;
 
     #[test]
     fn test_add_cell_by_value() {
-        let mut cells = Cells::new();
+        let cells = Cells::new();
         cells.add_cell_by_value(5);
-        assert_eq!(cells.values.len(), 1);
+        assert_eq!(cells.values().len(), 1);
     }
     #[test]
     fn test_get_at() {
-        let mut cells = Cells::new();
+        let cells = Cells::new();
         cells.add_cell_by_value(5);
         cells.add_cell_by_value(6);
         assert_eq!(cells.get_inner_value_at(1), 6);
@@ -95,7 +94,7 @@ mod tests {
     fn test_from() {
         let numbers = "1234";
         let cells = Cells::from(numbers);
-        let mut expected = Cells::new();
+        let  expected = Cells::new();
         expected.add_cell_by_value(1);
         expected.add_cell_by_value(2);
         expected.add_cell_by_value(3);
@@ -104,7 +103,7 @@ mod tests {
     }
     #[test]
     fn test_set_at() {
-        let mut cells = Cells::new();
+        let cells = Cells::new();
         cells.add_cell_by_value(10);
         cells.set_inner_value_at(0, 20);
         let cell_value = cells.get_inner_value_at(0);
@@ -112,7 +111,7 @@ mod tests {
     }
     #[test]
     fn test_set_at_row_col() {
-        let mut cells = Cells::new();
+        let cells = Cells::new();
         for i in 0..18 {
             cells.add_cell_by_value((i % 9) as u8)
         }
@@ -123,7 +122,7 @@ mod tests {
     }
     #[test]
     fn test_get_at_row_col() {
-        let mut cells = Cells::new();
+        let cells = Cells::new();
 
         for i in 0..18 {
             cells.add_cell_by_value((i % 9) as u8)
@@ -133,14 +132,14 @@ mod tests {
     }
     #[test]
     fn test_add_cell() {
-        let mut cells = Cells::new();
-        let mut ref_cells = Cells::new();
+        let cells = Cells::new();
+        let ref_cells = Cells::new();
         for i in 0..18 {
             cells.add_cell(Cell::new((i % 9) as u8))
         }
         assert_eq!(cells.get_inner_value_at(0), 0);
-        assert_eq!(cells.values.len(), 18);
-        for c in &cells.values {
+        assert_eq!(cells.values().len(), 18);
+        for c in cells.values() {
             ref_cells.add_cell(c.clone());
         }
         println!("{:?}", ref_cells);

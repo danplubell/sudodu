@@ -1,26 +1,24 @@
+use std::cell::RefCell;
+use std::rc::Rc;
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
 use crate::model::column::Column;
 #[derive(PartialEq, Debug, Clone)]
 pub struct Columns {
-    values: Vec<Column>,
+    values: Rc<RefCell<Vec<Column>>>,
 }
 impl Columns {
     pub fn new()->Self{
         Self {
-            values:  vec![Column::new();9]
+            values: Rc::new(RefCell::new((0..9).map(|_| Column::new()).collect())),        }
+    }
+    pub fn add_to_column(&self, col: usize, cell: Cell) {
+        if let Some(column) = self.values.borrow_mut().get_mut(col) {
+            column.add_cell(cell);
         }
     }
-    pub fn add_column(&mut self, column: Column) {
-        self.values.push(column);
-    }
-    pub fn add_to_column(&mut self, col:usize,cell:Cell) {
-        // get column
-        // add the cell
-        self.values.get_mut(col).unwrap().add_cell(cell)
-    }
-    pub fn get_column(&self, col:usize) -> &Column {
-        self.values.get(col).unwrap()
+    pub fn get_column(&self, col:usize) -> Column {
+        self.values.borrow().get(col).unwrap().clone()
     }
     pub fn collect_columns(&mut self,cells: Cells)  {
         let values = cells.values();
@@ -32,7 +30,7 @@ impl Columns {
         }
     }
     pub fn values(&self)->Vec<Column>{
-        self.clone().values
+        self.values.borrow().clone()
     }
 }
 #[cfg(test)]
@@ -43,13 +41,12 @@ mod tests {
 
     #[test]
     fn test_add_to_column(){
-        let mut columns = Columns::new();
-        let mut cell = Cell::new(8);
+        let columns = Columns::new();
+        let cell = Cell::new(8);
         columns.add_to_column(0,cell);
-        println!("{:?}",columns);
-        cell = Cell::new(7);
-        columns.add_to_column(1,cell);
-        println!("{:?}",columns);
+        let cell1 = Cell::new(7);
+        columns.add_to_column(1,cell1);
+
         let column_check1 = columns.get_column(0);
         assert_eq!(column_check1.get_at(0),Cell::new(8));
         let column_check2 = columns.get_column(1);
