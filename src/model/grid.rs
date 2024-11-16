@@ -95,6 +95,7 @@ mod tests {
     fn validate_invalid_grid() {
         let puzzle_data = "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
         let grid = Grid::new();
+        let _ = grid.try_from(puzzle_data);
         assert!(!grid.validate());
     }
 
