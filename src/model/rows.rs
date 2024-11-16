@@ -2,6 +2,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
+use crate::model::is_safe::is_safe;
 use crate::model::validate_cells::validate_cells;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -44,6 +45,9 @@ impl Rows {
     }
     pub fn is_valid(&self)->bool {
         self.values.borrow().iter().all(|c| validate_cells(c).is_ok())
+    }
+    pub fn is_safe(&self) -> bool {
+        self.values.borrow().iter().all(|c| is_safe(c).is_ok())
     }
 
 }

@@ -47,6 +47,12 @@ impl Grid {
         let regions_valid = self.regions.is_valid();
         matches!((rows_valid, cols_valid, regions_valid), (true, true, true))
     }
+    pub fn is_safe(&self) -> bool {
+        let rows_valid = self.rows.is_safe();
+        let cols_valid = self.columns.is_safe();
+        let regions_valid = self.regions.is_safe();
+        matches!((rows_valid, cols_valid, regions_valid), (true, true, true))
+    }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {
