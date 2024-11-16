@@ -1,4 +1,4 @@
-use std::cell::RefCell;
+use std::cell::{Ref, RefCell};
 use std::rc::Rc;
 
 #[derive(PartialEq, Debug, Clone)]
@@ -16,6 +16,9 @@ impl Cell {
     }
     pub fn replace_value(&self, value: u8) {
         *self.value.borrow_mut() = value;
+    }
+    pub fn value(self) -> Rc<RefCell<u8>> {
+        self.value
     }
 }
 #[cfg(test)]

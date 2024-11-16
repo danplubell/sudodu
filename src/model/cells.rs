@@ -53,6 +53,9 @@ impl Cells {
     pub fn get_at_mut(&mut self, index: usize) -> &mut Cell {
         self.values.get_mut(index).unwrap()
     }
+    pub fn values(self)->Vec<Cell> {
+        self.values
+    }
 }
 
 impl From<&str> for Cells {

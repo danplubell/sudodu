@@ -1,6 +1,7 @@
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
 
+#[derive(PartialEq, Debug, Clone)]
 pub struct Column {
     values: Cells,
 }
@@ -14,8 +15,12 @@ impl Column {
         self.values.add_cell(cell);
     }
     pub fn get_at(&self, index: usize) -> Cell{
-        todo!()
+        self.values.get_at(index).clone()
     }
+    pub fn get_values(self)-> Cells {
+        self.values
+    }
+
 }
 
 #[cfg(test)] 
@@ -28,6 +33,7 @@ mod tests {
         let mut column = Column::new();
         column.add_cell(Cell::new(0));
         column.add_cell(Cell::new(2));
-        
+        let c = column.get_at(1);
+        assert_eq!(c.get_value(),2);
     }
 }
