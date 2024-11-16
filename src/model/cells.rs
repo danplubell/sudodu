@@ -1,45 +1,30 @@
 use crate::model::cell::Cell;
 use std::cell::RefCell;
-/*
-#[derive(PartialEq, Debug, Clone)]
-pub struct RefCells {
-    values: RefCell<Vec<Cell>>,
-}
-impl RefCells {
-    pub fn new() -> Self {
-        Self {
-            values: RefCell::new(Vec::new()),
-        }
-    }
-    pub fn add_cell(&self, cell: Cell) {
-        self.values.borrow_mut().push(cell)
-    }
-}
-
- */
+use std::rc::Rc;
+type SmartVector = Rc<RefCell<Vec<Cell>>>;
 #[derive(PartialEq, Debug, Clone)]
 pub struct Cells {
-    values: Vec<Cell>,
+    values: SmartVector,
 }
 impl Cells {
     pub fn new() -> Self {
-        Self { values: Vec::new() }
+        Self { values: Rc::new(RefCell::new(Vec::new())) }
     }
-    pub fn add_cell_by_value(&mut self, value: u8) {
-        self.values.push(Cell::new(value));
+    pub fn add_cell_by_value(&self, value: u8) {
+        self.values.borrow_mut().push(Cell::new(value));
     }
-    pub fn add_cell(&mut self, cell: Cell) {
-        self.values.push(cell);
+    pub fn add_cell(&self, cell: Cell) {
+        self.values.borrow_mut().push(cell);
     }
     pub fn get_inner_value_at(&self, index: usize) -> u8 {
-        self.values.get(index).unwrap().get_value()
+        self.values.borrow().get(index).unwrap().get_value()
     }
-    pub fn set_inner_value_at(&mut self, index: usize, value: u8) {
-        if let Some(cell) = self.values.get(index) {
+    pub fn set_inner_value_at(&self, index: usize, value: u8) {
+        if let Some(cell) = self.values.borrow().get(index) {
             cell.replace_value(value);
         }
     }
-    pub fn set_inner_at_row_col(&mut self, row: usize, col: usize, value: u8) {
+    pub fn set_inner_at_row_col(&self, row: usize, col: usize, value: u8) {
         let index = row * 9 + col;
         self.set_inner_value_at(index, value);
     }
@@ -47,14 +32,11 @@ impl Cells {
         let index = row * 9 + col;
         self.get_inner_value_at(index)
     }
-    pub fn get_at(&self, index: usize) -> &Cell {
-        self.values.get(index).unwrap()
+    pub fn get_at(&self, index: usize) -> Cell {
+        self.values.borrow().get(index).cloned().unwrap()
     }
-    pub fn get_at_mut(&mut self, index: usize) -> &mut Cell {
-        self.values.get_mut(index).unwrap()
-    }
-    pub fn values(self)->Vec<Cell> {
-        self.values
+    pub fn values(&self)->Rc<RefCell<Vec<Cell>>> {
+        self.values.clone()
     }
 }
 
