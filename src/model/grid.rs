@@ -20,13 +20,13 @@ impl Grid {
             regions: Regions::new(),
         }
     }
-        pub fn with_cells(&self, cells: &Cells) -> &Grid {
-            self.rows.collect_rows(cells);
-            self.columns.collect_columns(cells);
-            self.regions.collect_regions(cells);
-            self
-        }
-    fn try_from(&self, value: &str) -> Result<(), ParsePuzzleError> {
+    pub fn with_cells(&self, cells: &Cells) -> &Grid {
+        self.rows.collect_rows(cells);
+        self.columns.collect_columns(cells);
+        self.regions.collect_regions(cells);
+        self
+    }
+    pub fn try_from(&mut self, value: &str) -> Result<(), ParsePuzzleError> {
         if value.chars().any(|c| !c.is_numeric()) {
             return Err(ParsePuzzleError::HasAlpha);
         }
@@ -36,10 +36,10 @@ impl Grid {
         if value.len() < 81 {
             return Err(ParsePuzzleError::TooShort);
         }
-        let cells = Cells::from(value);
-        self.rows.collect_rows(&cells);
-        self.columns.collect_columns(&cells);
-        self.regions.collect_regions(&cells);
+        self.raw_cells = Cells::from(value);
+        self.rows.collect_rows(&self.raw_cells);
+        self.columns.collect_columns(&self.raw_cells);
+        self.regions.collect_regions(&self.raw_cells);
         Ok(())
     }
     pub fn validate(&self) -> bool {
@@ -48,14 +48,23 @@ impl Grid {
         let regions_valid = self.regions.is_valid();
         matches!((rows_valid, cols_valid, regions_valid), (true, true, true))
     }
-    pub fn check_is_safe(&self,row: usize, col:usize, num: u8) -> bool{
-        is_safe_placement(self.raw_cells.clone(), row, col,num)
+    pub fn check_is_safe(&self, row: usize, col: usize, num: u8) -> bool {
+        is_safe_placement(self.raw_cells.clone(), row, col, num)
     }
     pub fn is_safe(&self) -> bool {
         let rows_valid = self.rows.is_safe();
         let cols_valid = self.columns.is_safe();
         let regions_valid = self.regions.is_safe();
         matches!((rows_valid, cols_valid, regions_valid), (true, true, true))
+    }
+    pub fn get_value_at_row_col(&self, row:usize, col:usize) -> u8 {
+        self.raw_cells.get_inner_at_row_col(row,col)
+    }
+    pub fn set_value_at_row_col(&self, row:usize, col:usize, value:u8) {
+        self.raw_cells.set_inner_at_row_col(row,col,value);
+    }
+    pub fn raw_cells(&self) -> Cells {
+        self.raw_cells.clone()
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
@@ -74,7 +83,7 @@ mod tests {
 
     #[test]
     fn too_short() {
-        let grid = Grid::new();
+        let mut grid = Grid::new();
         let err = grid.try_from("1234").unwrap_err();
         println!("{}", err);
         assert_eq!(err, ParsePuzzleError::TooShort);
@@ -82,7 +91,7 @@ mod tests {
 
     #[test]
     fn not_all_digits() {
-        let grid = Grid::new();
+        let mut grid = Grid::new();
         let err = grid.try_from("aaaaaaaaaaaaaaa").unwrap_err();
         assert_eq!(err, ParsePuzzleError::HasAlpha);
     }
@@ -90,17 +99,17 @@ mod tests {
     fn validate_valid_grid() {
         let solution =
             "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
-        let grid = Grid::new();
+        let mut grid = Grid::new();
         let _ = grid.try_from(solution);
-        
+
         assert!(grid.validate());
     }
     #[test]
     fn validate_invalid_grid() {
-        let puzzle_data = "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
-        let grid = Grid::new();
+        let puzzle_data =
+            "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
+        let mut grid = Grid::new();
         let _ = grid.try_from(puzzle_data);
         assert!(!grid.validate());
     }
-
 }

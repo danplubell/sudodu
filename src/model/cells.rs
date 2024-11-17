@@ -17,7 +17,11 @@ impl Cells {
         self.values.borrow_mut().push(cell);
     }
     pub fn get_inner_value_at(&self, index: usize) -> u8 {
-        self.values.borrow().get(index).unwrap().get_value()
+        match self.values.borrow().get(index) {
+            Some(v) => v.get_value(),
+            None => {println!("index: {} {}", index, self.values.borrow().len(), ); 0}
+        }
+//        self.values.borrow().get(index).unwrap().get_value()
     }
     pub fn set_inner_value_at(&self, index: usize, value: u8) {
         if let Some(cell) = self.values.borrow().get(index) {

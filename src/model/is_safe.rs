@@ -17,7 +17,7 @@ pub fn is_safe_placement(cells: Cells, row: usize, col: usize, value: u8) -> boo
 pub fn is_safe(cells: &Cells) -> Result<bool, ValidateCellsResults> {
     let mut cell_reg = [0u8; 10];
     let mut multiple: Vec<u8> = Vec::new();
-    let mut not_found: Vec<u8> = Vec::new();
+    let not_found: Vec<u8> = Vec::new();
     // count the number of times a value is in the cells collection
     cells.values().iter().for_each(|c| {
         let r = cell_reg.get_mut(c.get_value() as usize);
@@ -54,14 +54,14 @@ mod tests {
         let puzzle_data =
             "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
         let cells = Cells::from(puzzle_data);
-        assert!(is_safe_placement(&cells, 0, 2, 8))
+        assert!(is_safe_placement(cells, 0, 2, 8))
     }
     #[test]
     fn test_unsafe_placement() {
         let puzzle_data =
             "310450900072986143906010508639178020150090806004003700005731009701829350000645010";
         let cells = Cells::from(puzzle_data);
-        assert!(!is_safe_placement(&cells, 0, 2, 9))
+        assert!(!is_safe_placement(cells, 0, 2, 9))
 
     }
     #[test]
