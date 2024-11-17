@@ -2,7 +2,7 @@ use crate::model::cells::Cells;
 use crate::model::grid::Grid;
 use crate::model::validate_cells::ValidateCellsResults;
 
-pub fn is_safe_placement(cells: &Cells, row: usize, col: usize, value: u8) -> bool {
+pub fn is_safe_placement(cells: Cells, row: usize, col: usize, value: u8) -> bool {
     let grid = Grid::new();
     let test_cells = Cells::new();
     cells

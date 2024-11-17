@@ -1,9 +1,9 @@
-mod cells;
+pub mod cells;
 
-mod cell;
-mod columns;
-mod rows;
-mod regions;
-mod grid;
-mod validate_cells;
-mod is_safe;
+pub mod cell;
+pub mod columns;
+pub mod rows;
+pub mod regions;
+pub(crate) mod grid;
+pub mod validate_cells;
+pub mod is_safe;

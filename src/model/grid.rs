@@ -1,5 +1,6 @@
 use crate::model::cells::Cells;
 use crate::model::columns::Columns;
+use crate::model::is_safe::is_safe_placement;
 use crate::model::regions::Regions;
 use crate::model::rows::Rows;
 
@@ -46,6 +47,9 @@ impl Grid {
         let cols_valid = self.columns.is_valid();
         let regions_valid = self.regions.is_valid();
         matches!((rows_valid, cols_valid, regions_valid), (true, true, true))
+    }
+    pub fn check_is_safe(&self,row: usize, col:usize, num: u8) -> bool{
+        is_safe_placement(self.raw_cells.clone(), row, col,num)
     }
     pub fn is_safe(&self) -> bool {
         let rows_valid = self.rows.is_safe();
