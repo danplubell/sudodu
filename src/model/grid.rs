@@ -66,6 +66,19 @@ impl Grid {
     pub fn raw_cells(&self) -> Cells {
         self.raw_cells.clone()
     }
+    pub fn find_unassigned_location(&self)-> Option<(usize,usize)>{
+        match  self.raw_cells.values().into_iter().position(|c|c.get_value() ==0) {
+            Some(position) => {
+                // convert position into row and column
+                let row = position / 9;
+                let col = position % 9;
+                Some((row, col))
+            },
+            None=> None
+        }
+        
+       
+    }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {
