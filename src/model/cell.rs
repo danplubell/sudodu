@@ -3,12 +3,14 @@ use std::rc::Rc;
 
 #[derive(PartialEq, Debug, Clone)]
 pub struct Cell {
-    value: Rc<RefCell<u8>>
+    value: Rc<RefCell<u8>>,
+    notes: Rc<RefCell<Vec<u8>>>
 }
 impl Cell {
     pub fn new(value: u8) -> Self {
         Self {
             value: Rc::new(RefCell::new(value)),
+            notes: Rc::new(RefCell::new(Vec::new())),
         }
     }
     pub fn get_value(&self) -> u8 {
@@ -16,6 +18,12 @@ impl Cell {
     }
     pub fn replace_value(&self, value: u8) {
         *self.value.borrow_mut() = value;
+    }
+    pub fn add_note_value(&self, value: u8) {
+        self.notes.borrow_mut().push(value);
+    }
+    pub fn get_notes(&self) -> Rc<RefCell<Vec<u8>>> {
+        self.notes.clone()
     }
 }
 #[cfg(test)]

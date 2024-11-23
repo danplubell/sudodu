@@ -6,6 +6,10 @@ use std::rc::Rc;
 pub struct Cells {
     values: Rc<RefCell<Vec<Cell>>>,
 }
+
+impl Cells {
+}
+
 impl Cells {
     pub fn new() -> Self {
         Self { values: Rc::new(RefCell::new(Vec::new())) }
@@ -41,6 +45,21 @@ impl Cells {
     }
     pub fn values(&self) -> Vec<Cell> {
         self.values.borrow().clone()
+    }
+    pub(crate) fn add_note_at_row_col(&self, row: usize, col: usize, value: u8) {
+        let index = row * 9 + col;
+        self.add_note_to_cell(index,value);
+    }
+    pub fn get_notes_at_row_col(&self, row:usize, col:usize) -> Option<Rc<RefCell<Vec<u8>>>> {
+        let index = row * 9 + col;
+        let values = self.values.borrow();
+        let cell = values.get(index);
+        cell.map(|c| c.get_notes())
+    }
+    pub fn add_note_to_cell(&self, index:usize, value: u8) {
+        if let Some(cell) = self.values.borrow().get(index) {
+            cell.add_note_value(value);
+        }
     }
 }
 

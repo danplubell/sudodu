@@ -63,6 +63,9 @@ impl Grid {
     pub fn set_value_at_row_col(&self, row:usize, col:usize, value:u8) {
         self.raw_cells.set_inner_at_row_col(row,col,value);
     }
+    pub fn add_note_at_row_col(&self, row:usize, col:usize, value: u8) {
+        self.raw_cells.add_note_at_row_col(row, col, value);
+    }
     pub fn raw_cells(&self) -> Cells {
         self.raw_cells.clone()
     }
@@ -76,8 +79,6 @@ impl Grid {
             },
             None=> None
         }
-        
-       
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
