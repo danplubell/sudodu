@@ -2,6 +2,9 @@ use crate::model::grid::Grid;
 use crate::solvers::solve_sudoku_backtrack::solve_sudoku_backtrack;
 
 const N: usize = 9;
+/// This is an example of solving a sudoku puzzle by first collecting the possible values for each cell
+/// Then the backtrack method is used to solve the puzzle.
+/// As values are assigned the possible values of cells is modified base on the new assignment
 pub fn solve_sudoku_notes(grid: &Grid, mut _row: usize, mut _col: usize) -> bool {
     // go through all the cells
     for row in 0..9 {
