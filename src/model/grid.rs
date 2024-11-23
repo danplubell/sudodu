@@ -80,6 +80,26 @@ impl Grid {
             None=> None
         }
     }
+    pub fn get_row(&self, row:usize) -> Cells {
+        self.rows.get_row(row)
+    }
+    pub fn get_column(&self, col:usize) -> Cells {
+        self.columns.get_column(col)
+    }
+    pub fn get_region_by_row_col(&self, row:usize, col:usize) {
+        
+    }
+    pub fn clear_note(&self, row:usize, col:usize, value:u8) {
+        //clear row notes
+        let row = self.get_row(row);
+        row.clear_note(value);
+        //clear column notes
+        let col = self.get_column(col);
+        col.clear_note(value);
+        //clear region notes for which the row and column is in
+        let region = self.get_region_by_row_col(row,col);
+        region.clear_note(value);
+    }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
 pub enum ParsePuzzleError {

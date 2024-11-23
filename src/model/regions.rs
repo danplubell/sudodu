@@ -23,6 +23,9 @@ impl Regions {
     pub fn get_region(&self, region: usize) -> Cells {
         self.values.borrow().get(region).unwrap().clone()
     }
+    pub fn get_region_by_row_col(&self, row:usize, col:usize) -> Cells {
+        
+    }
     pub fn collect_regions(&self, cells: &Cells) {
         // These are the root nodes
         // From each root we iterate from the root to

@@ -25,6 +25,12 @@ impl Cell {
     pub fn get_notes(&self) -> Rc<RefCell<Vec<u8>>> {
         self.notes.clone()
     }
+    pub fn clear_note(&self,value: u8) {
+        let index = self.notes.borrow_mut().iter().position(|v| *v == value);
+        if let Some(index) = index {
+            self.notes.borrow_mut().remove(index);
+        }
+    }
 }
 #[cfg(test)]
 mod tests {
@@ -40,5 +46,12 @@ mod tests {
         let cell = Cell::new(9);
         cell.replace_value(0);
         assert_eq!(cell.get_value(), 0);
+    }
+    #[test]
+    fn test_clear_note() {
+        let cell = Cell::new(5);
+        cell.add_note_value(10);
+        cell.clear_note(10);
+        assert!(cell.get_notes().borrow().is_empty());
     }
 }

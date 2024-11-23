@@ -61,6 +61,9 @@ impl Cells {
             cell.add_note_value(value);
         }
     }
+    pub fn clear_note(&self, value: u8) {
+        self.values.borrow_mut().iter().for_each(|c| c.clear_note(value))
+    }
 }
 
 impl From<&str> for Cells {

@@ -37,8 +37,8 @@ impl Rows {
         self.values.borrow().clone()
     }
 
-    pub fn get_row(&self, col:usize) -> Cells {
-        self.values.borrow().get(col).unwrap().clone()
+    pub fn get_row(&self, row:usize) -> Cells {
+        self.values.borrow().get(row).unwrap().clone()
     }
     pub fn get_value_at_row_col(&self,row:usize, col:usize)->u8 {
         self.get_row(row).values().get(col).unwrap().get_value()

@@ -28,6 +28,8 @@ pub fn solve_sudoku_notes(grid: &Grid, mut row: usize, mut col: usize) -> bool {
             for num in notes.iter() {
                 if grid.check_is_safe(row, col, *num ) {
                     grid.set_value_at_row_col(row, col, *num);
+                    //clear value from any notes at row, col, and region
+                    grid.clear_note(row,col,num);
                     if solve_sudoku_backtrack(grid, row, col) {
                         return true;
                     }
