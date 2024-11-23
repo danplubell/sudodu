@@ -57,48 +57,65 @@ impl Grid {
         let regions_valid = self.regions.is_safe();
         matches!((rows_valid, cols_valid, regions_valid), (true, true, true))
     }
-    pub fn get_value_at_row_col(&self, row:usize, col:usize) -> u8 {
-        self.raw_cells.get_inner_at_row_col(row,col)
+    pub fn get_value_at_row_col(&self, row: usize, col: usize) -> u8 {
+        self.raw_cells.get_inner_at_row_col(row, col)
     }
-    pub fn set_value_at_row_col(&self, row:usize, col:usize, value:u8) {
-        self.raw_cells.set_inner_at_row_col(row,col,value);
+    pub fn set_value_at_row_col(&self, row: usize, col: usize, value: u8) {
+        self.raw_cells.set_inner_at_row_col(row, col, value);
     }
-    pub fn add_note_at_row_col(&self, row:usize, col:usize, value: u8) {
+    pub fn add_note_at_row_col(&self, row: usize, col: usize, value: u8) {
         self.raw_cells.add_note_at_row_col(row, col, value);
     }
     pub fn raw_cells(&self) -> Cells {
         self.raw_cells.clone()
     }
-    pub fn find_unassigned_location(&self)-> Option<(usize,usize)>{
-        match  self.raw_cells.values().into_iter().position(|c|c.get_value() ==0) {
+    pub fn find_unassigned_location(&self) -> Option<(usize, usize)> {
+        match self
+            .raw_cells
+            .values()
+            .into_iter()
+            .position(|c| c.get_value() == 0)
+        {
             Some(position) => {
                 // convert position into row and column
                 let row = position / 9;
                 let col = position % 9;
                 Some((row, col))
-            },
-            None=> None
+            }
+            None => None,
         }
     }
-    pub fn get_row(&self, row:usize) -> Cells {
+    pub fn get_row(&self, row: usize) -> Cells {
         self.rows.get_row(row)
     }
-    pub fn get_column(&self, col:usize) -> Cells {
+    pub fn get_column(&self, col: usize) -> Cells {
         self.columns.get_column(col)
     }
-    pub fn get_region_by_row_col(&self, row:usize, col:usize) {
-        
+    pub fn get_region_by_row_col(&self, row: usize, col: usize) -> usize {
+        let rrow = row / 3;
+        let rcol = col / 3;
+        rrow * 3 + rcol
     }
-    pub fn clear_note(&self, row:usize, col:usize, value:u8) {
+
+    pub fn clear_note(&self, row: usize, col: usize, value: u8) {
         //clear row notes
-        let row = self.get_row(row);
-        row.clear_note(value);
+        let grid_row = self.get_row(row);
+        grid_row.clear_note(value);
         //clear column notes
-        let col = self.get_column(col);
-        col.clear_note(value);
+        let grid_col = self.get_column(col);
+        grid_col.clear_note(value);
         //clear region notes for which the row and column is in
-        let region = self.get_region_by_row_col(row,col);
-        region.clear_note(value);
+        let region = self.get_region_by_row_col(row, col);
+        self.regions.clear_note(region, value);
+    }
+    pub fn as_string(&self) -> String {
+        self
+            .raw_cells()
+            .values()
+            .iter()
+            .map(|c| char::from_digit(c.get_value() as u32, 10).unwrap())
+            .collect()
+        
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]

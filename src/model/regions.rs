@@ -1,9 +1,9 @@
 use crate::model::cell::Cell;
 use crate::model::cells::Cells;
-use std::cell::RefCell;
-use std::rc::Rc;
 use crate::model::is_safe::is_safe;
 use crate::model::validate_cells::validate_cells;
+use std::cell::RefCell;
+use std::rc::Rc;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Regions {
@@ -15,16 +15,16 @@ impl Regions {
             values: Rc::new(RefCell::new((0..9).map(|_| Cells::new()).collect())),
         }
     }
-    pub fn add_to_region(&self, col: usize, cell: Cell) {
-        if let Some(region) = self.values.borrow_mut().get_mut(col) {
-            region.add_cell(cell);
+    pub fn add_to_region(&self, region: usize, cell: Cell) {
+        if let Some(reg) = self.values.borrow_mut().get_mut(region) {
+            reg.add_cell(cell);
         }
     }
     pub fn get_region(&self, region: usize) -> Cells {
         self.values.borrow().get(region).unwrap().clone()
     }
-    pub fn get_region_by_row_col(&self, row:usize, col:usize) -> Cells {
-        
+    pub fn clear_note(&self, region: usize, value: u8) {
+        self.values.borrow_mut().get(region).unwrap().clear_note(value);
     }
     pub fn collect_regions(&self, cells: &Cells) {
         // These are the root nodes
@@ -44,13 +44,15 @@ impl Regions {
             }
         }
     }
-    pub fn is_valid(&self)->bool {
-        self.values.borrow().iter().all(|c| validate_cells(c).is_ok())
+    pub fn is_valid(&self) -> bool {
+        self.values
+            .borrow()
+            .iter()
+            .all(|c| validate_cells(c).is_ok())
     }
     pub fn is_safe(&self) -> bool {
         self.values.borrow().iter().all(|c| is_safe(c).is_ok())
     }
-
 }
 #[cfg(test)]
 mod tests {
@@ -80,5 +82,19 @@ mod tests {
         assert_eq!(first_region, first_region_cells);
         let last_region = regions.get_region(8);
         assert_eq!(last_region, last_region_cells);
+    }
+    #[test]
+    pub fn test_clear_note() {
+        let regions = Regions::new();
+        let cell1 = Cell::new(3);
+        cell1.add_note_value(1);
+        cell1.add_note_value(2);
+        let cell2 = Cell::new(4);
+        cell2.add_note_value(1);
+        cell2.add_note_value(3);
+        regions.add_to_region(0,cell1);
+        regions.add_to_region(0, cell2);
+        regions.clear_note(0,1);
+        println!("{:?}", regions);
     }
 }

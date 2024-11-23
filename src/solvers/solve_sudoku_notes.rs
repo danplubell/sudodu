@@ -2,7 +2,7 @@ use crate::model::grid::Grid;
 use crate::solvers::solve_sudoku_backtrack::solve_sudoku_backtrack;
 
 const N: usize = 9;
-pub fn solve_sudoku_notes(grid: &Grid, mut row: usize, mut col: usize) -> bool {
+pub fn solve_sudoku_notes(grid: &Grid, mut _row: usize, mut _col: usize) -> bool {
     // go through all the cells
     for row in 0..9 {
         for col in 0..9 {
@@ -14,7 +14,6 @@ pub fn solve_sudoku_notes(grid: &Grid, mut row: usize, mut col: usize) -> bool {
                     }
                 }
             }
-            let notes = grid.raw_cells().get_notes_at_row_col(row, col);
         }
     }
     match grid.find_unassigned_location() {
@@ -29,25 +28,13 @@ pub fn solve_sudoku_notes(grid: &Grid, mut row: usize, mut col: usize) -> bool {
                 if grid.check_is_safe(row, col, *num ) {
                     grid.set_value_at_row_col(row, col, *num);
                     //clear value from any notes at row, col, and region
-                    grid.clear_note(row,col,num);
+                    grid.clear_note(row,col,*num);
                     if solve_sudoku_backtrack(grid, row, col) {
                         return true;
                     }
                     grid.set_value_at_row_col(row, col, 0);
                 }
             }
-            /*
-            for num in 1..=N {
-                if grid.check_is_safe(row, col, num as u8) {
-                    grid.set_value_at_row_col(row, col, num as u8);
-                    if solve_sudoku_backtrack(grid, row, col) {
-                        return true;
-                    }
-                    grid.set_value_at_row_col(row, col, 0);
-                }
-            }
-
-             */
         }
         None => return true,
     }
@@ -56,7 +43,6 @@ pub fn solve_sudoku_notes(grid: &Grid, mut row: usize, mut col: usize) -> bool {
 #[cfg(test)]
 mod tests {
     use crate::model::grid::Grid;
-    use crate::solvers::solve_sudoku_backtrack::solve_sudoku_backtrack;
     use crate::solvers::solve_sudoku_notes::solve_sudoku_notes;
 
     #[test]
@@ -71,7 +57,20 @@ mod tests {
         let r = solve_sudoku_notes(&grid, 0, 0);
        
         assert!(r);
-        let result: String = grid.raw_cells().values().iter().map(|c| char::from_digit(c.get_value() as u32, 10).unwrap()).collect();
+        let result = grid.as_string();
         assert_eq!(result, solution);
+    }
+    #[test]
+    fn test_solve_t1(){
+        let puzzle = "004300000890200670700900050500008140070032060600001308001750900005040012980006005";
+        let solution = "254367891893215674716984253532698147178432569649571328421753986365849712987126435";
+        let mut grid = Grid::new();
+        grid.try_from(puzzle).expect("TODO: panic message");
+        let r = solve_sudoku_notes(&grid, 0, 0);
+
+        assert!(r);
+        let result = grid.as_string();
+        assert_eq!(result, solution);
+
     }
 }
