@@ -2,10 +2,7 @@ mod sudoku;
 mod solution;
 mod model_inner;
 mod solvers;
-//use model_inner::puzzle_save;
-//use csv::Reader;
-//use std::error::Error;
-//use sudoku::Sudoku;
+mod model;
 
 fn main() {
     let _solution = "318457962572986143946312578639178425157294836284563791425731689761829354893645217";
