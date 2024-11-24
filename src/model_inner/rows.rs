@@ -1,9 +1,9 @@
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::model::cell::Cell;
-use crate::model::cells::Cells;
-use crate::model::is_safe::is_safe;
-use crate::model::validate_cells::validate_cells;
+use crate::model_inner::cell::Cell;
+use crate::model_inner::cells::Cells;
+use crate::model_inner::is_safe::is_safe;
+use crate::model_inner::validate_cells::validate_cells;
 
 #[derive(PartialEq, Debug, Clone)]
 
@@ -53,8 +53,8 @@ impl Rows {
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::cells::Cells;
-    use crate::model::rows::Rows;
+    use crate::model_inner::cells::Cells;
+    use crate::model_inner::rows::Rows;
 
     #[test]
     fn test_collect_rows() {

@@ -1,4 +1,4 @@
-use crate::model::grid::Grid;
+use crate::model_inner::grid::Grid;
 use crate::solvers::solve_sudoku_backtrack::solve_sudoku_backtrack;
 
 const N: usize = 9;
@@ -45,7 +45,7 @@ pub fn solve_sudoku_notes(grid: &Grid, mut _row: usize, mut _col: usize) -> bool
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::grid::Grid;
+    use crate::model_inner::grid::Grid;
     use crate::solvers::solve_sudoku_notes::solve_sudoku_notes;
 
     #[test]

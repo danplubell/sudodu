@@ -1,8 +1,8 @@
 mod sudoku;
 mod solution;
-mod model;
+mod model_inner;
 mod solvers;
-//use model::puzzle_save;
+//use model_inner::puzzle_save;
 //use csv::Reader;
 //use std::error::Error;
 //use sudoku::Sudoku;

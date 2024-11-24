@@ -1,6 +1,6 @@
-use crate::model::cells::Cells;
-use crate::model::grid::Grid;
-use crate::model::validate_cells::ValidateCellsResults;
+use crate::model_inner::cells::Cells;
+use crate::model_inner::grid::Grid;
+use crate::model_inner::validate_cells::ValidateCellsResults;
 
 pub fn is_safe_placement(cells: Cells, row: usize, col: usize, value: u8) -> bool {
     let grid = Grid::new();
@@ -44,8 +44,8 @@ pub fn is_safe(cells: &Cells) -> Result<bool, ValidateCellsResults> {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cells::Cells;
-    use crate::model::is_safe::{is_safe, is_safe_placement};
+    use crate::model_inner::cells::Cells;
+    use crate::model_inner::is_safe::{is_safe, is_safe_placement};
 
     #[test]
     fn test_save_add() {

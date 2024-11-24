@@ -34,7 +34,7 @@ impl Cell {
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::cell::Cell;
+    use crate::model_inner::cell::Cell;
 
     #[test]
     fn test_get_value() {

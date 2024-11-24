@@ -1,7 +1,7 @@
-use crate::model::cell::Cell;
-use crate::model::cells::Cells;
-use crate::model::is_safe::is_safe;
-use crate::model::validate_cells::validate_cells;
+use crate::model_inner::cell::Cell;
+use crate::model_inner::cells::Cells;
+use crate::model_inner::is_safe::is_safe;
+use crate::model_inner::validate_cells::validate_cells;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -47,9 +47,9 @@ impl Columns {
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::cell::Cell;
-    use crate::model::cells::Cells;
-    use crate::model::columns::Columns;
+    use crate::model_inner::cell::Cell;
+    use crate::model_inner::cells::Cells;
+    use crate::model_inner::columns::Columns;
 
     #[test]
     fn test_add_to_column() {

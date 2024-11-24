@@ -1,8 +1,8 @@
-use crate::model::cells::Cells;
-use crate::model::columns::Columns;
-use crate::model::is_safe::is_safe_placement;
-use crate::model::regions::Regions;
-use crate::model::rows::Rows;
+use crate::model_inner::cells::Cells;
+use crate::model_inner::columns::Columns;
+use crate::model_inner::is_safe::is_safe_placement;
+use crate::model_inner::regions::Regions;
+use crate::model_inner::rows::Rows;
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Grid {
@@ -130,7 +130,7 @@ pub enum ParsePuzzleError {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::grid::{Grid, ParsePuzzleError};
+    use crate::model_inner::grid::{Grid, ParsePuzzleError};
 
     #[test]
     fn too_short() {

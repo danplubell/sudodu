@@ -1,4 +1,4 @@
-use crate::model::cell::Cell;
+use crate::model_inner::cell::Cell;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -78,8 +78,8 @@ impl From<&str> for Cells {
 
 #[cfg(test)]
 mod tests {
-    use crate::model::cell::Cell;
-    use crate::model::cells::Cells;
+    use crate::model_inner::cell::Cell;
+    use crate::model_inner::cells::Cells;
 
     #[test]
     fn test_add_cell_by_value() {
