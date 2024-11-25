@@ -1,4 +1,4 @@
-use crate::model::grid::Grid;
+use crate::model_inner::grid::Grid;
 const N: usize = 9;
 /// A naive sudoku solver that uses recursion to generate a solution
 pub fn solve_sudoku_naive(grid: &Grid, mut row:usize, mut col:usize) -> bool{
@@ -61,7 +61,7 @@ pub fn solve_sudoku_naive(grid: &Grid, mut row:usize, mut col:usize) -> bool{
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::grid::Grid;
+    use crate::model_inner::grid::Grid;
     use crate::solvers::solve_sudoku_naive::solve_sudoku_naive;
 
     #[test]

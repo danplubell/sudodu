@@ -1,6 +1,6 @@
-use crate::model::grid::Grid;
+use crate::model_inner::grid::Grid;
 const N:usize = 9;
-pub fn solve_sudoku_backtrack(grid: &Grid, mut row:usize, mut col:usize)->bool {
+pub fn solve_sudoku_backtrack(grid: &Grid, mut _row:usize, mut _col:usize)->bool {
     match grid.find_unassigned_location() {
         Some((row,col)) => {
 ;            for num in 1..=N {
@@ -19,7 +19,7 @@ pub fn solve_sudoku_backtrack(grid: &Grid, mut row:usize, mut col:usize)->bool {
 }
 #[cfg(test)]
 mod tests {
-    use crate::model::grid::Grid;
+    use crate::model_inner::grid::Grid;
     use crate::solvers::solve_sudoku_backtrack::solve_sudoku_backtrack;
 
     #[test]
