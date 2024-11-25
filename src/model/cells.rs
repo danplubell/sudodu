@@ -19,9 +19,8 @@ impl Cells {
     pub fn get_inner_value_at(&self, index: usize) -> u8 {
         match self.values.borrow().get(index) {
             Some(v) => v.get_value(),
-            None => {println!("index: {} {}", index, self.values.borrow().len(), ); 0}
+            None => 0
         }
-//        self.values.borrow().get(index).unwrap().get_value()
     }
     pub fn set_inner_value_at(&self, index: usize, value: u8) {
         if let Some(cell) = self.values.borrow().get(index) {

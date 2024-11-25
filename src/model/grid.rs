@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use crate::model::cells::Cells;
 use crate::model::columns::Columns;
 use crate::model::is_safe::is_safe_placement;
@@ -78,6 +79,22 @@ impl Grid {
         }
         
        
+    }
+}
+impl Into<Grid> for String {
+    fn into(self) -> Grid {
+        todo!()
+    }
+}
+impl Display for Grid {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.raw_cells().values().chunks(9).for_each(|chunk| {
+            chunk.iter().for_each(|cell| {
+                write!(f, "{} ", cell.get_value()).unwrap();
+            });
+            writeln!(f).unwrap();
+        });
+        writeln!(f)
     }
 }
 #[derive(Clone, PartialEq, Debug, thiserror::Error)]
