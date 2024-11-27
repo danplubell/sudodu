@@ -75,6 +75,6 @@ mod tests {
         assert!(r);
         let result: String = grid.raw_cells().values().iter().map(|c| char::from_digit(c.get_value() as u32, 10).unwrap()).collect();
         assert_eq!(result, solution);
-        print!("{}",grid);
+        print!("{:?}",grid);
     }
 }

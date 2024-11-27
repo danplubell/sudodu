@@ -19,7 +19,15 @@ impl Cells {
     pub fn has_value(&self, value: u8) -> bool {
         self.values.iter().any(|c| c.value() == value)
     }
-    pub fn is_sa
+    pub fn is_safe(&self, row:usize, col:usize, value: u8) {
+        let mut cells = self.values.clone();
+        // set value
+        let index = row * 8 + col;
+        let _ = std::mem::replace(&mut cells[index], Cell::new(value));
+        // check rows
+        // columns
+        // recheck regions
+    }
 }
 
 impl<'a> IntoIterator for &'a Cells {
